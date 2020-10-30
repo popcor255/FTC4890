@@ -1,4 +1,4 @@
-# FTC4890 (Updated October 29, 2020)
+# FTC4890
 A repository of Team 4890's FTC code!
 
 ## Welcome to all of FTC!
@@ -13,3 +13,10 @@ This repository will primarily be used by members of 4890 so that the code can b
 * Abdulla Hsayed
 * Damon Lin
 * Ace Tran
+
+# Release Information
+
+## Version 1.0 (October 29, 2020) 
+
+* First release ever, woohoo!
+* First revision of Teleop code added.
