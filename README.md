@@ -28,12 +28,12 @@ This repository will primarily be used by members of 4890 so that the code can b
    - Ring launcher positioning system.** 
    - Ring pusher.
 
-## Bug fixes.
+## Bug Fixes
 
 * Fixed the toggle functions for the intake.
 * Removed redundant code such as certain methods. 
 
-## Known bugs (to be fixed)
+## Known Bugs *(to be fixed)*
 
 * *Servo values of ring launcher incorrect, needs to be tested further so that the launcher is angled correctly. Positioning functions also not working and needs to be worked on as well.
 * **Claw system of wobble goal may or may not be functioning correctly, servo for it needs to be replaced.
