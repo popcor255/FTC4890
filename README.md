@@ -8,10 +8,12 @@ This repository will primarily be used by members of 4890 so that the code can b
 # Contributers/Programmers
 
 * Michael Reyes - Head Programmer
+* Preksha Agarwal
 * Jawad Dawood
 * Noureldin Elhelw
 * Abdulla Hsayed
 * Damon Lin
+* Mary Mungroo
 * Ace Tran
 
 # Release Information
