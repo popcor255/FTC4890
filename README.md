@@ -18,6 +18,21 @@ This repository will primarily be used by members of 4890 so that the code can b
 
 # Release Information
 
+# Version 1.2 (November 15, 2020)
+
+## Additions
+
+- Luancher functionality in teleop completed and working properly.
+- Claw system redesigned for 180 servo, completed and working properly.
+
+## Bug Fixes
+
+- Arm motor slowed down to 30% of normal speed, max speed resulted in an uncontrollable arm.
+
+## Known Bugs *(to be fixed)*
+
+* Outtake speeds are theoretical, have not been tested yet for actual use in firing rings into the goals.
+
 # Version 1.1 (November 14, 2020)
 
 ## Additions
