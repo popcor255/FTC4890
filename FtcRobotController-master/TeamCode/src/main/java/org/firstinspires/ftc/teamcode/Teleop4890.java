@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -15,7 +14,6 @@ public class Teleop4890 extends LinearOpMode {
     private DcMotor driveBackRight;
     private DcMotor driveBackLeft;
     private DcMotor outtakeLeft;
-    private DcMotor outtakeRight;
     private DcMotor Intake;
     private DcMotor Arm;
     private Servo Claw;
@@ -24,9 +22,6 @@ public class Teleop4890 extends LinearOpMode {
 
     private ElapsedTime runtime = new ElapsedTime();
 
-
-    //toggles for some of the robot's functions
-    boolean intakeToggle = false;
     double outtakeSpeed = 0;
 
     @Override
@@ -43,7 +38,6 @@ public class Teleop4890 extends LinearOpMode {
         driveBackRight = hardwareMap.dcMotor.get("driveBackRight");
         driveBackLeft = hardwareMap.dcMotor.get("driveBackLeft");
         outtakeLeft = hardwareMap.dcMotor.get("outtakeLeft");
-        outtakeRight = hardwareMap.dcMotor.get("outtakeRight");
         Intake = hardwareMap.dcMotor.get("Intake");
         Arm = hardwareMap.dcMotor.get("Arm");
         Claw = hardwareMap.servo.get("Claw");
@@ -57,7 +51,6 @@ public class Teleop4890 extends LinearOpMode {
         driveFrontRight.setDirection(DcMotor.Direction.REVERSE);
         driveBackRight.setDirection(DcMotor.Direction.REVERSE);
         outtakeLeft.setDirection(DcMotor.Direction.FORWARD);
-        outtakeRight.setDirection(DcMotor.Direction.REVERSE);
         Intake.setDirection(DcMotor.Direction.FORWARD);
         Arm.setDirection(DcMotor.Direction.FORWARD);
         Claw.setPosition(0.5);
@@ -107,9 +100,6 @@ public class Teleop4890 extends LinearOpMode {
 
             //intake toggle
             if (gamepad1.right_bumper) {
-                intakeToggle = !intakeToggle;
-            }
-            if (intakeToggle) {
                 Intake.setPower(1);
             } else {
                 Intake.setPower(0);
@@ -200,17 +190,16 @@ public class Teleop4890 extends LinearOpMode {
     //outtake system
     void outtakeSys() {
         outtakeLeft.setPower(outtakeSpeed);
-        outtakeRight.setPower(outtakeSpeed);
     }
 
     //Controller 2 Controls:
     //arm controls
     void armSys() {
-        Arm.setPower(gamepad2.left_stick_y * 0.3);
+        Arm.setPower(gamepad2.left_stick_y * 0.35);
     }
 
     //ring pusher into outtake
-    //pushes, waits for 0.5 seconds before going back to starting pos.
+    //moves to pushing pos for 0.5 seconds before going back to starting pos.
     void outtakePush() {
         pusher.setPosition(0.5);
         sleep(500);
