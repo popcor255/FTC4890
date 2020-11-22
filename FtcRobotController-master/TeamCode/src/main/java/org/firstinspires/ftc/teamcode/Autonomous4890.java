@@ -264,12 +264,12 @@ public class Autonomous4890 extends LinearOpMode {
         Arm.setPower(0);
     }
 
-    void Grab (int milliseconds) {
+    void Grab(int milliseconds) {
         Claw.setPosition(1);
         sleep(milliseconds);
     }
 
-    void Release (int milliseconds) {
+    void Release(int milliseconds) {
         Claw.setPosition(0.5);
         sleep(milliseconds);
     }
