@@ -18,6 +18,21 @@ This repository will primarily be used by members of 4890 so that the code can b
 
 # Release Information
 
+# Version 1.3 (November 22, 2020)
+
+## Additions
+
+- Began work on the Autonomous with EasyOpenCV (added support for it).*
+
+## Removals
+
+- Removed the right outtake as the outtake will only use the left motor now.
+- Redundant intake code removed.
+
+## Known Bugs *(to be fixed)*
+
+* *Code has not been tested or completed, currently it is only for testing if the robot will complete different actions based on number of rings.
+
 # Version 1.2 (November 15, 2020)
 
 ## Additions
