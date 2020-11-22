@@ -23,6 +23,7 @@ public class Teleop4890 extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
 
     double outtakeSpeed = 0;
+    boolean intakeToggle = false;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -100,6 +101,9 @@ public class Teleop4890 extends LinearOpMode {
 
             //intake toggle
             if (gamepad1.right_bumper) {
+                intakeToggle = !intakeToggle;
+            }
+            if (intakeToggle) {
                 Intake.setPower(1);
             } else {
                 Intake.setPower(0);
