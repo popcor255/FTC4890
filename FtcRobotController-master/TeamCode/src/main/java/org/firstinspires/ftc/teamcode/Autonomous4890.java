@@ -30,7 +30,8 @@ public class Autonomous4890 extends LinearOpMode {
     private DcMotor Intake;
     private DcMotor Arm;
     private Servo Claw;
-    private Servo platform;
+    private Servo platformRight;
+    private Servo platformLeft;
     private Servo pusher;
 
     @Override
@@ -44,18 +45,20 @@ public class Autonomous4890 extends LinearOpMode {
         Intake = hardwareMap.dcMotor.get("Intake");
         Arm = hardwareMap.dcMotor.get("Arm");
         Claw = hardwareMap.servo.get("Claw");
-        platform = hardwareMap.servo.get("platform");
+        platformRight = hardwareMap.servo.get("platformRight");
+        platformLeft = hardwareMap.servo.get("platformLeft");
         pusher = hardwareMap.servo.get("pusher");
 
         driveFrontLeft.setDirection(DcMotor.Direction.FORWARD);
         driveBackLeft.setDirection(DcMotor.Direction.FORWARD);
+        Intake.setDirection(DcMotor.Direction.FORWARD);
         driveFrontRight.setDirection(DcMotor.Direction.REVERSE);
         driveBackRight.setDirection(DcMotor.Direction.REVERSE);
-        outtakeLeft.setDirection(DcMotor.Direction.FORWARD);
-        Intake.setDirection(DcMotor.Direction.FORWARD);
-        Arm.setDirection(DcMotor.Direction.FORWARD);
+        outtakeLeft.setDirection(DcMotor.Direction.REVERSE);
+        Arm.setDirection(DcMotor.Direction.REVERSE);
         Claw.setPosition(1);
-        platform.setPosition(0);
+        platformRight.setPosition(0);
+        platformLeft.setPosition(1);
         pusher.setPosition(1);
 
         //initializes the camera and sets it up for which camera will be used.
@@ -200,10 +203,10 @@ public class Autonomous4890 extends LinearOpMode {
     }
 
     void strafeLeft(double power, int milliseconds) {
-        driveFrontRight.setPower(power);
-        driveFrontLeft.setPower(-power);
-        driveBackRight.setPower(-power);
-        driveBackLeft.setPower(power);
+        driveFrontRight.setPower(-power);
+        driveFrontLeft.setPower(power);
+        driveBackRight.setPower(power);
+        driveBackLeft.setPower(-power);
         sleep(milliseconds);
         driveFrontLeft.setPower(0);
         driveBackLeft.setPower(0);
@@ -212,10 +215,10 @@ public class Autonomous4890 extends LinearOpMode {
     }
 
     void strafeRight(double power, int milliseconds) {
-        driveFrontRight.setPower(-power);
-        driveFrontLeft.setPower(power);
-        driveBackRight.setPower(power);
-        driveBackLeft.setPower(-power);
+        driveFrontRight.setPower(power);
+        driveFrontLeft.setPower(-power);
+        driveBackRight.setPower(-power);
+        driveBackLeft.setPower(power);
         sleep(milliseconds);
         driveFrontLeft.setPower(0);
         driveBackLeft.setPower(0);
@@ -236,12 +239,14 @@ public class Autonomous4890 extends LinearOpMode {
     }
 
     void platformUp(int milliseconds) {
-        platform.setPosition(1);
+        platformRight.setPosition(0.31);
+        platformLeft.setPosition(0.69);
         sleep(milliseconds);
     }
 
     void platformDown(int milliseconds) {
-        platform.setPosition(0);
+        platformRight.setPosition(0);
+        platformLeft.setPosition(1);
         sleep(milliseconds);
     }
 
@@ -253,13 +258,13 @@ public class Autonomous4890 extends LinearOpMode {
     }
 
     void armUp(int milliseconds) {
-        Arm.setPower(0.3);
+        Arm.setPower(0.5);
         sleep(milliseconds);
         Arm.setPower(0);
     }
 
     void armDown(int milliseconds) {
-        Arm.setPower(-0.3);
+        Arm.setPower(-0.5);
         sleep(milliseconds);
         Arm.setPower(0);
     }
@@ -270,7 +275,7 @@ public class Autonomous4890 extends LinearOpMode {
     }
 
     void Release(int milliseconds) {
-        Claw.setPosition(0.5);
+        Claw.setPosition(0);
         sleep(milliseconds);
     }
 }

@@ -17,7 +17,8 @@ public class Teleop4890 extends LinearOpMode {
     private DcMotor Intake;
     private DcMotor Arm;
     private Servo Claw;
-    private Servo platform;
+    private Servo platformRight;
+    private Servo platformLeft;
     private Servo pusher;
 
     private ElapsedTime runtime = new ElapsedTime();
@@ -42,20 +43,22 @@ public class Teleop4890 extends LinearOpMode {
         Intake = hardwareMap.dcMotor.get("Intake");
         Arm = hardwareMap.dcMotor.get("Arm");
         Claw = hardwareMap.servo.get("Claw");
-        platform = hardwareMap.servo.get("platform");
+        platformRight = hardwareMap.servo.get("platformRight");
+        platformLeft = hardwareMap.servo.get("platformLeft");
         pusher = hardwareMap.servo.get("pusher");
 
         //sets the direction of motors and positions of servos
         //right motors always reversed due to their placement
         driveFrontLeft.setDirection(DcMotor.Direction.FORWARD);
         driveBackLeft.setDirection(DcMotor.Direction.FORWARD);
+        Intake.setDirection(DcMotor.Direction.FORWARD);
         driveFrontRight.setDirection(DcMotor.Direction.REVERSE);
         driveBackRight.setDirection(DcMotor.Direction.REVERSE);
-        outtakeLeft.setDirection(DcMotor.Direction.FORWARD);
-        Intake.setDirection(DcMotor.Direction.FORWARD);
-        Arm.setDirection(DcMotor.Direction.FORWARD);
-        Claw.setPosition(0.5);
-        platform.setPosition(0);
+        outtakeLeft.setDirection(DcMotor.Direction.REVERSE);
+        Arm.setDirection(DcMotor.Direction.REVERSE);
+        Claw.setPosition(1);
+        platformRight.setPosition(0);
+        platformLeft.setPosition(1);
         pusher.setPosition(1);
 
         waitForStart();
@@ -142,10 +145,12 @@ public class Teleop4890 extends LinearOpMode {
 
             //platform launcher controls
             if (gamepad2.dpad_up) { //angles it upward
-                platform.setPosition(1);
+                platformRight.setPosition(0.31);
+                platformLeft.setPosition(0.69);
             }
             if (gamepad2.dpad_down) { //angles it down
-                platform.setPosition(0);
+                platformRight.setPosition(0);
+                platformLeft.setPosition(1);
             }
 
             //claw functions
@@ -153,7 +158,7 @@ public class Teleop4890 extends LinearOpMode {
                 Claw.setPosition(1);
             }
             if (gamepad2.b) { //releases
-                Claw.setPosition(0.5);
+                Claw.setPosition(0);
             }
             idle();
         }
@@ -177,18 +182,18 @@ public class Teleop4890 extends LinearOpMode {
 
     //controls for strafing left
     void strafeLeft() {
-        driveFrontRight.setPower(gamepad1.left_trigger);
-        driveFrontLeft.setPower(-gamepad1.left_trigger);
-        driveBackRight.setPower(-gamepad1.left_trigger);
-        driveBackLeft.setPower(gamepad1.left_trigger);
+        driveFrontRight.setPower(-gamepad1.left_trigger);
+        driveFrontLeft.setPower(gamepad1.left_trigger);
+        driveBackRight.setPower(gamepad1.left_trigger);
+        driveBackLeft.setPower(-gamepad1.left_trigger);
     }
 
     //controls for strafing right
     void strafeRight() {
-        driveFrontRight.setPower(-gamepad1.right_trigger);
-        driveFrontLeft.setPower(gamepad1.right_trigger);
-        driveBackRight.setPower(gamepad1.right_trigger);
-        driveBackLeft.setPower(-gamepad1.right_trigger);
+        driveFrontRight.setPower(gamepad1.right_trigger);
+        driveFrontLeft.setPower(-gamepad1.right_trigger);
+        driveBackRight.setPower(-gamepad1.right_trigger);
+        driveBackLeft.setPower(gamepad1.right_trigger);
     }
 
     //outtake system
@@ -199,7 +204,7 @@ public class Teleop4890 extends LinearOpMode {
     //Controller 2 Controls:
     //arm controls
     void armSys() {
-        Arm.setPower(gamepad2.left_stick_y * 0.35);
+        Arm.setPower(gamepad2.left_stick_y * 0.5);
     }
 
     //ring pusher into outtake
