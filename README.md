@@ -27,7 +27,7 @@ This repository will primarily be used by members of 4890 so that the code can b
 ## Removals
 
 - Removed the right outtake as the outtake will only use the left motor now.
-- Redundant intake code removed.
+- Redundant code removed.
 
 ## Known Bugs *(to be fixed)*
 
