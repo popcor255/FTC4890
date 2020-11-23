@@ -18,6 +18,22 @@ This repository will primarily be used by members of 4890 so that the code can b
 
 # Release Information
 
+# Version 1.3.1 (November 22, 2020)
+
+## Additions
+
+- Added support for another servo on the launcher as two are now needed again.
+
+## Bug Fixes
+
+- Arm motor and outtake motor reversed in the code as they were turning the wrong way.
+- For the new claw design, the claw servo now opens up all the way when it releases. Originally only opened up halfway because of the original claw design.
+
+## Known Bugs *(to be fixed)*
+
+* Autonomous code has not been tested or completed, currently it is only for testing if the robot will complete different actions based on number of rings.
+* Outtake speeds are only theoretical, have not been tested yet.
+
 # Version 1.3 (November 22, 2020)
 
 ## Additions
