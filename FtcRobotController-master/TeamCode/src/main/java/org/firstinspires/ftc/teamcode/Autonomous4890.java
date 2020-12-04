@@ -34,6 +34,9 @@ public class Autonomous4890 extends LinearOpMode {
     private Servo platformLeft;
     private Servo pusher;
 
+    int ringNumber;
+    boolean detection = true;
+
     @Override
     public void runOpMode() {
 
@@ -75,27 +78,36 @@ public class Autonomous4890 extends LinearOpMode {
         phoneCam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
             @Override
             public void onOpened() {
-                phoneCam.startStreaming(320, 240, OpenCvCameraRotation.SIDEWAYS_LEFT);
+                phoneCam.startStreaming(320, 240, OpenCvCameraRotation.SIDEWAYS_RIGHT);
+                phoneCam.setFlashlightEnabled(true);
             }
         });
 
         waitForStart();
 
         while (opModeIsActive()) {
-            telemetry.addData("Analysis", pipeline.getAnalysis()); //analysis = threshold value
-            telemetry.addData("Position", pipeline.position); //position = number of rings
-            telemetry.update();
+            telemetry.addData("Analysis", pipeline.getAnalysis());
+            telemetry.addData("Position", pipeline.position);
 
-            // Don't burn CPU cycles busy-looping in this sample
-            sleep(50);
-        }
-
-        if (pipeline.position == SkystoneDeterminationPipeline.RingPosition.NONE) {
-            strafeLeft(1, 1000);
-        } else if (pipeline.position == SkystoneDeterminationPipeline.RingPosition.ONE) {
-            straight(1, 1000);
-        } else if (pipeline.position == SkystoneDeterminationPipeline.RingPosition.FOUR) {
-            strafeRight(1, 1000);
+            while (detection) {
+                if (pipeline.position == SkystoneDeterminationPipeline.RingPosition.NONE) {
+                    ringNumber = 0;
+                    detection = false;
+                } else if (pipeline.position == SkystoneDeterminationPipeline.RingPosition.ONE) {
+                    ringNumber = 1;
+                    detection = false;
+                } else if (pipeline.position == SkystoneDeterminationPipeline.RingPosition.FOUR) {
+                    ringNumber = 4;
+                    detection = false;
+                }
+            }
+            if (ringNumber == 0) {
+                strafeLeft(1, 500);
+            } else if (ringNumber == 1) {
+                straight(1, 500);
+            } else if (ringNumber == 4) {
+                strafeRight(1, 500);
+            }
         }
     }
 
@@ -121,7 +133,7 @@ public class Autonomous4890 extends LinearOpMode {
         static final int REGION_HEIGHT = 25;
 
         final int FOUR_RING_THRESHOLD = 150;
-        final int ONE_RING_THRESHOLD = 135;
+        final int ONE_RING_THRESHOLD = 140;
 
         Point region1_pointA = new Point(
                 REGION1_TOPLEFT_ANCHOR_POINT.x,
@@ -191,10 +203,10 @@ public class Autonomous4890 extends LinearOpMode {
     }
 
     void straight(double power, int milliseconds) {
-        driveFrontLeft.setPower(power);
-        driveBackLeft.setPower(power);
-        driveFrontRight.setPower(power);
-        driveBackRight.setPower(power);
+        driveFrontLeft.setPower(-power);
+        driveBackLeft.setPower(-power);
+        driveFrontRight.setPower(-power);
+        driveBackRight.setPower(-power);
         sleep(milliseconds);
         driveFrontLeft.setPower(0);
         driveBackLeft.setPower(0);
