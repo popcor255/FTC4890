@@ -18,6 +18,22 @@ This repository will primarily be used by members of 4890 so that the code can b
 
 # Release Information
 
+# Version 1.3.2 (December 3, 2020)
+
+## Additions
+
+- Phone flashlight support for use during autonomous.
+
+## Bug Fixes
+
+- Straight method in autonomous is reversed as previously a positive power would make the robot move backwards instead of foward.
+- Ring detection if & else statements for the robot moved into the opModeIsActive while loop, and modified so that it will only briefly check for the amount of rings once the autonomous mode starts.*
+
+## Known Bugs *(to be fixed)*
+
+* Autonomous code has not been tested or completed, currently it is only for testing if the robot will complete different actions based on number of rings.
+* Outtake speeds are only theoretical, have not been tested yet.
+
 # Version 1.3.1 (November 22, 2020)
 
 ## Additions
