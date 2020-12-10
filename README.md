@@ -18,6 +18,20 @@ This repository will primarily be used by members of 4890 so that the code can b
 
 # Release Information
 
+# Version 1.3.3 (December 9, 2020)
+
+## Additions
+
+- Completed autonomous for picking up both wobble goals & parking in all three possible ring setups. Thought it is not entirely consistent mainly because of robot placement & the drivetrain motors.
+
+## Removals
+
+- Intake is no longer an off or on toggle, instead three buttons are used to intake, reverse the intake, or to turn it off.
+
+## Known Bugs *(to be fixed)*
+
+- Outtake speeds are only theoretical, have not been tested yet.
+
 # Version 1.3.2 (December 3, 2020)
 
 ## Additions
