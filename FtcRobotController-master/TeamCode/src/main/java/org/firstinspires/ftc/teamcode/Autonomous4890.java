@@ -55,10 +55,10 @@ public class Autonomous4890 extends LinearOpMode {
         driveFrontLeft.setDirection(DcMotor.Direction.FORWARD);
         driveBackLeft.setDirection(DcMotor.Direction.FORWARD);
         Intake.setDirection(DcMotor.Direction.FORWARD);
+        Arm.setDirection(DcMotor.Direction.FORWARD);
         driveFrontRight.setDirection(DcMotor.Direction.REVERSE);
         driveBackRight.setDirection(DcMotor.Direction.REVERSE);
         outtakeLeft.setDirection(DcMotor.Direction.REVERSE);
-        Arm.setDirection(DcMotor.Direction.REVERSE);
         Claw.setPosition(1);
         platformRight.setPosition(0);
         platformLeft.setPosition(1);
@@ -78,7 +78,7 @@ public class Autonomous4890 extends LinearOpMode {
         phoneCam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
             @Override
             public void onOpened() {
-                phoneCam.startStreaming(320, 240, OpenCvCameraRotation.SIDEWAYS_RIGHT);
+                phoneCam.startStreaming(320, 240, OpenCvCameraRotation.SIDEWAYS_LEFT);
                 phoneCam.setFlashlightEnabled(true);
             }
         });
@@ -102,12 +102,53 @@ public class Autonomous4890 extends LinearOpMode {
                 }
             }
             if (ringNumber == 0) {
-                strafeLeft(1, 500);
+                armDown(1050);
+                straight(1, 3310);
+                strafeRight(1, 600);
+                Release(500);
+                strafeLeft(1, 970);
+                rotate(-1, 535);
+                strafeRight(1, 2770);
+                Grab(500);
+                strafeLeft(1, 2650);
+                rotate(1, 650);
+                strafeRight(1, 930);
             } else if (ringNumber == 1) {
-                straight(1, 500);
-            } else if (ringNumber == 4) {
+                armDown(1050);
+                strafeRight(1, 450);
+                straight(1, 4100);
+                strafeLeft(1, 1200);
+                Release(700);
+                strafeLeft(1, 1300);
+                rotate(-1, 90);
+                straight(-1, 3300);
                 strafeRight(1, 500);
+                Grab(500);
+                straight(1, 3600);
+                rotate(1, 90);
+                strafeRight(1, 1250);
+                Release(500);
+                strafeLeft(1, 600);
+                straight(-1, 500);
+            } else if (ringNumber == 4) {
+                armDown(1050);
+                strafeRight(1, 450);
+                straight(1, 5000);
+                rotate(1, 300);
+                Release(500);
+                strafeLeft(1, 3700);
+                rotate(-1, 888);
+                strafeRight(1, 2250);
+                Grab(500);
+                strafeLeft(1, 2500);
+                straight(1, 3400);
+                rotate(1, 270);
+                Release(500);
+                strafeLeft(1, 400);
+                straight(-1, 1500);
             }
+
+            stop();
         }
     }
 
@@ -127,7 +168,7 @@ public class Autonomous4890 extends LinearOpMode {
         // The core values which define the location and size of the sample regions
         // topleft = where the topleft point of the analysis region begins
         // region width & height determines the analysis' dimensions
-        static final Point REGION1_TOPLEFT_ANCHOR_POINT = new Point(181, 98);
+        static final Point REGION1_TOPLEFT_ANCHOR_POINT = new Point(215, 55);
 
         static final int REGION_WIDTH = 35;
         static final int REGION_HEIGHT = 25;
@@ -251,8 +292,8 @@ public class Autonomous4890 extends LinearOpMode {
     }
 
     void platformUp(int milliseconds) {
-        platformRight.setPosition(0.31);
-        platformLeft.setPosition(0.69);
+        platformRight.setPosition(0.24);
+        platformLeft.setPosition(0.76);
         sleep(milliseconds);
     }
 

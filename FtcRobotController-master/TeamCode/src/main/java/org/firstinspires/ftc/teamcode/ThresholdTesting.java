@@ -15,8 +15,8 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvInternalCamera;
 import org.openftc.easyopencv.OpenCvPipeline;
 
-@TeleOp(name = "EasyOpenCVExample")
-public class EasyOpenCVExample extends LinearOpMode
+@TeleOp(name = "ThresholdTesting")
+public class ThresholdTesting extends LinearOpMode
 {
     OpenCvInternalCamera phoneCam;
     SkystoneDeterminationPipeline pipeline;
@@ -80,7 +80,7 @@ public class EasyOpenCVExample extends LinearOpMode
         /*
          * The core values which define the location and size of the sample regions
          */
-        static final Point REGION1_TOPLEFT_ANCHOR_POINT = new Point(181,98);
+        static final Point REGION1_TOPLEFT_ANCHOR_POINT = new Point(215,55);
 
         static final int REGION_WIDTH = 35;
         static final int REGION_HEIGHT = 25;

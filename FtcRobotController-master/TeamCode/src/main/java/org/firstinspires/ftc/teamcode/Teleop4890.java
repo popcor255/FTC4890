@@ -24,7 +24,6 @@ public class Teleop4890 extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
 
     double outtakeSpeed = 0;
-    boolean intakeToggle = false;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -102,14 +101,15 @@ public class Teleop4890 extends LinearOpMode {
                 driveBackRight.setPower(0);
             }
 
-            //intake toggle
-            if (gamepad1.right_bumper) {
-                intakeToggle = !intakeToggle;
-            }
-            if (intakeToggle) {
+            //intake toggles
+            if (gamepad1.right_bumper) { //on (intakes)
                 Intake.setPower(1);
-            } else {
-                Intake.setPower(0);
+            }
+            if (gamepad1.left_bumper) { //reverses outtake
+                Intake.setPower(-1);
+            }
+            if (gamepad1.y) {
+                Intake.setPower(0); //off
             }
 
             //outtake toggles
@@ -117,16 +117,10 @@ public class Teleop4890 extends LinearOpMode {
                 outtakeSpeed = 0; //off
             }
             if (gamepad1.x) {
-                outtakeSpeed = 1; //fast
-            }
-            if (gamepad1.y) {
-                outtakeSpeed = 0.75; //medium
+                outtakeSpeed = 0.9; //fast
             }
             if (gamepad1.b) {
-                outtakeSpeed = 0.50; //slow
-            }
-            if (gamepad1.left_bumper) {
-                outtakeSpeed = 0.60; //power shot
+                outtakeSpeed = 0.75; //power shot
             }
             outtakeSys();
 
@@ -145,8 +139,8 @@ public class Teleop4890 extends LinearOpMode {
 
             //platform launcher controls
             if (gamepad2.dpad_up) { //angles it upward
-                platformRight.setPosition(0.31);
-                platformLeft.setPosition(0.69);
+                platformRight.setPosition(0.24);
+                platformLeft.setPosition(0.76);
             }
             if (gamepad2.dpad_down) { //angles it down
                 platformRight.setPosition(0);
