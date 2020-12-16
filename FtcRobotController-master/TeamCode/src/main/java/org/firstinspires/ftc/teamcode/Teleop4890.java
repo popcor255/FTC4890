@@ -51,9 +51,9 @@ public class Teleop4890 extends LinearOpMode {
         driveFrontLeft.setDirection(DcMotor.Direction.FORWARD);
         driveBackLeft.setDirection(DcMotor.Direction.FORWARD);
         Intake.setDirection(DcMotor.Direction.FORWARD);
+        outtakeLeft.setDirection(DcMotor.Direction.FORWARD);
         driveFrontRight.setDirection(DcMotor.Direction.REVERSE);
         driveBackRight.setDirection(DcMotor.Direction.REVERSE);
-        outtakeLeft.setDirection(DcMotor.Direction.REVERSE);
         Arm.setDirection(DcMotor.Direction.REVERSE);
         Claw.setPosition(1);
         platformRight.setPosition(0);
@@ -120,7 +120,7 @@ public class Teleop4890 extends LinearOpMode {
                 outtakeSpeed = 0.9; //fast
             }
             if (gamepad1.b) {
-                outtakeSpeed = 0.75; //power shot
+                outtakeSpeed = 0.8; //power shot
             }
             outtakeSys();
 
@@ -139,8 +139,8 @@ public class Teleop4890 extends LinearOpMode {
 
             //platform launcher controls
             if (gamepad2.dpad_up) { //angles it upward
-                platformRight.setPosition(0.24);
-                platformLeft.setPosition(0.76);
+                platformRight.setPosition(0.25);
+                platformLeft.setPosition(0.75);
             }
             if (gamepad2.dpad_down) { //angles it down
                 platformRight.setPosition(0);
@@ -205,7 +205,7 @@ public class Teleop4890 extends LinearOpMode {
     //moves to pushing pos for 0.5 seconds before going back to starting pos.
     void outtakePush() {
         pusher.setPosition(0.5);
-        sleep(500);
+        sleep(400);
         pusher.setPosition(1);
     }
 }

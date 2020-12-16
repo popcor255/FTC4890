@@ -17,8 +17,8 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvInternalCamera;
 import org.openftc.easyopencv.OpenCvPipeline;
 
-@Autonomous(name = "Autonomous4890")
-public class Autonomous4890 extends LinearOpMode {
+@Autonomous(name = "CurrentAutonomous4890")
+public class CurrentAutonomous4890 extends LinearOpMode {
 
     OpenCvInternalCamera phoneCam;
     SkystoneDeterminationPipeline pipeline;
@@ -115,37 +115,20 @@ public class Autonomous4890 extends LinearOpMode {
                 strafeRight(1, 930);
             } else if (ringNumber == 1) {
                 armDown(1050);
-                strafeRight(1, 450);
+                strafeRight(1, 350);
                 straight(1, 4100);
-                strafeLeft(1, 1200);
+                strafeLeft(1, 1400);
                 Release(700);
                 strafeLeft(1, 1300);
-                rotate(-1, 90);
-                straight(-1, 3300);
-                strafeRight(1, 500);
-                Grab(500);
-                straight(1, 3600);
-                rotate(1, 90);
-                strafeRight(1, 1250);
-                Release(500);
-                strafeLeft(1, 600);
-                straight(-1, 500);
+                straight(-1, 1200);
             } else if (ringNumber == 4) {
                 armDown(1050);
-                strafeRight(1, 450);
-                straight(1, 5000);
-                rotate(1, 300);
+                strafeRight(1, 350);
+                straight(1, 4800);
+                rotate(1, 500);
                 Release(500);
-                strafeLeft(1, 3700);
-                rotate(-1, 888);
-                strafeRight(1, 2250);
-                Grab(500);
-                strafeLeft(1, 2500);
-                straight(1, 3400);
-                rotate(1, 270);
-                Release(500);
-                strafeLeft(1, 400);
-                straight(-1, 1500);
+                strafeLeft(1, 2000);
+                straight(-1, 300);
             }
 
             stop();
@@ -173,7 +156,7 @@ public class Autonomous4890 extends LinearOpMode {
         static final int REGION_WIDTH = 35;
         static final int REGION_HEIGHT = 25;
 
-        final int FOUR_RING_THRESHOLD = 146;
+        final int FOUR_RING_THRESHOLD = 142;
         final int ONE_RING_THRESHOLD = 130;
 
         Point region1_pointA = new Point(
