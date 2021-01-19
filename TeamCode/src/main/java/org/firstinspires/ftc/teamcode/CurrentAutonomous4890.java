@@ -39,12 +39,9 @@ public class CurrentAutonomous4890 extends LinearOpMode {
         // landscape orientation, though.
         phoneCam.setViewportRenderingPolicy(OpenCvCamera.ViewportRenderingPolicy.OPTIMIZE_VIEW);
 
-        phoneCam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
-            @Override
-            public void onOpened() {
-                phoneCam.startStreaming(320, 240, OpenCvCameraRotation.SIDEWAYS_LEFT);
-                phoneCam.setFlashlightEnabled(true);
-            }
+        phoneCam.openCameraDeviceAsync(() -> {
+            phoneCam.startStreaming(320, 240, OpenCvCameraRotation.SIDEWAYS_LEFT);
+            phoneCam.setFlashlightEnabled(true);
         });
 
         waitForStart();
@@ -65,6 +62,7 @@ public class CurrentAutonomous4890 extends LinearOpMode {
                     detection = false;
                 }
             }
+
             if (ringNumber == 0) {
                 armDown(1050);
                 straight(1, 3310);
