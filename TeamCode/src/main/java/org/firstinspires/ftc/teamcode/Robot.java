@@ -35,8 +35,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-public class Robot
-{
+public class Robot {
 
     /* Public OpMode members. */
     public DcMotor driveFrontRight;
@@ -53,11 +52,11 @@ public class Robot
     public BNO055IMU imu;
 
     /* local OpMode members. */
-    HardwareMap hwMap =  null;
-    public ElapsedTime runtime  = new ElapsedTime();
+    HardwareMap hwMap = null;
+    public ElapsedTime runtime = new ElapsedTime();
 
     /* Constructor */
-    public Robot(){
+    public Robot() {
 
     }
 
@@ -148,5 +147,5 @@ public class Robot
     void release() {
         release(0);
     }
- }
+}
 

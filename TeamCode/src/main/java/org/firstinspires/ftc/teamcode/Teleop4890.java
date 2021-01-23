@@ -8,11 +8,17 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
+import java.util.Arrays;
+
 @TeleOp(name = "Teleop4890")
 public class Teleop4890 extends LinearOpMode {
     Robot robot = new Robot();
 
     double outtakeSpeed = 0;
+    double FrontLeftVal = gamepad1.left_stick_y - (gamepad1.left_stick_x) + -gamepad1.right_stick_x;
+    double FrontRightVal = gamepad1.left_stick_y + (gamepad1.left_stick_x) - -gamepad1.right_stick_x;
+    double BackLeftVal = gamepad1.left_stick_y + (gamepad1.left_stick_x) + -gamepad1.right_stick_x;
+    double BackRightVal = gamepad1.left_stick_y - (gamepad1.left_stick_x) - -gamepad1.right_stick_x;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -28,42 +34,19 @@ public class Teleop4890 extends LinearOpMode {
 
         while (opModeIsActive()) {
 
-            //controller 1 functions
-            //left motor drive
-            if (gamepad1.left_stick_y != 0) {
-                leftDrive();
-            } else {
-                robot.driveFrontLeft.setPower(0);
-                robot.driveBackLeft.setPower(0);
+            //Move range to between 0 and +1, if not already
+            double[] wheelPowers = {FrontRightVal, FrontLeftVal, BackLeftVal, BackRightVal};
+            Arrays.sort(wheelPowers);
+            if (wheelPowers[3] > 1) {
+                FrontLeftVal /= wheelPowers[3];
+                FrontRightVal /= wheelPowers[3];
+                BackLeftVal /= wheelPowers[3];
+                BackRightVal /= wheelPowers[3];
             }
-
-            //right motor drive
-            if (gamepad1.right_stick_y != 0) {
-                rightDrive();
-            } else {
-                robot.driveFrontRight.setPower(0);
-                robot.driveBackRight.setPower(0);
-            }
-
-            //strafe left
-            if (gamepad1.left_trigger != 0) {
-                strafeLeft();
-            } else {
-                robot.driveFrontLeft.setPower(0);
-                robot.driveBackLeft.setPower(0);
-                robot.driveFrontRight.setPower(0);
-                robot.driveBackRight.setPower(0);
-            }
-
-            //strafe right
-            if (gamepad1.right_trigger != 0) {
-                strafeRight();
-            } else {
-                robot.driveFrontLeft.setPower(0);
-                robot.driveBackLeft.setPower(0);
-                robot.driveFrontRight.setPower(0);
-                robot.driveBackRight.setPower(0);
-            }
+            robot.driveFrontLeft.setPower(FrontLeftVal);
+            robot.driveFrontRight.setPower(FrontRightVal);
+            robot.driveBackLeft.setPower(BackLeftVal);
+            robot.driveBackRight.setPower(BackRightVal);
 
             if (gamepad1.dpad_down) {
                 Orientation angles;
@@ -71,8 +54,7 @@ public class Teleop4890 extends LinearOpMode {
                 while (bStillTurning) {
                     angles = robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
 
-                    if (angles.firstAngle > 175 || angles.firstAngle < -175)
-                    {
+                    if (angles.firstAngle > 175 || angles.firstAngle < -175) {
                         bStillTurning = false;
                     }
                     rotate(0.25);
