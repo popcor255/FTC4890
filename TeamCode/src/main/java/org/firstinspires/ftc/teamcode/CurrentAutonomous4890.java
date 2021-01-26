@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
@@ -26,7 +27,12 @@ public class CurrentAutonomous4890 extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
+
         robot.init(hardwareMap);
+        robot.driveFrontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.driveBackLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.driveFrontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.driveBackRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         //initializes the camera and sets it up for which camera will be used.
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());

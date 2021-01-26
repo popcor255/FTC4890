@@ -84,32 +84,13 @@ public class Robot {
         Arm = hwMap.dcMotor.get("Arm");
 
         // Setting motor directions
-        driveFrontLeft.setDirection(DcMotor.Direction.FORWARD);
-        driveBackLeft.setDirection(DcMotor.Direction.FORWARD);
+        driveFrontLeft.setDirection(DcMotor.Direction.REVERSE);
+        driveBackLeft.setDirection(DcMotor.Direction.REVERSE);
         Intake.setDirection(DcMotor.Direction.FORWARD);
         Arm.setDirection(DcMotor.Direction.FORWARD);
-        driveFrontRight.setDirection(DcMotor.Direction.REVERSE);
-        driveBackRight.setDirection(DcMotor.Direction.REVERSE);
+        driveFrontRight.setDirection(DcMotor.Direction.FORWARD);
+        driveBackRight.setDirection(DcMotor.Direction.FORWARD);
         outtakeLeft.setDirection(DcMotor.Direction.FORWARD);
-
-        // Set all motors to zero power
-        driveFrontLeft.setPower(0);
-        driveBackLeft.setPower(0);
-        Intake.setPower(0);
-        Arm.setPower(0);
-        driveFrontRight.setPower(0);
-        driveBackRight.setPower(0);
-        outtakeLeft.setPower(0);
-
-        // Set all motors to run without encoders.
-        // May want to use RUN_USING_ENCODERS if encoders are installed.
-        driveFrontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        driveBackLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        Intake.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        Arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        driveFrontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        driveBackRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        outtakeLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         // Define and initialize ALL installed servos.
         Claw = hwMap.servo.get("Claw");
@@ -117,7 +98,7 @@ public class Robot {
         platformLeft = hwMap.servo.get("platformLeft");
         pusher = hwMap.servo.get("pusher");
         Claw.setPosition(1);
-        platformRight.setPosition(0);
+        platformRight.setPosition(0.6);
         platformLeft.setPosition(1);
         pusher.setPosition(1);
     }
