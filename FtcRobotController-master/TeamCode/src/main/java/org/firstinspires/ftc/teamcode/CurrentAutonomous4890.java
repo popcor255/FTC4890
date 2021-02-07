@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Servo;
 
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
@@ -17,52 +16,23 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvInternalCamera;
 import org.openftc.easyopencv.OpenCvPipeline;
 
-@Autonomous(name = "CurrentAutonomous4890")
+@Autonomous(name = "CurrentAutonomous4890", preselectTeleOp = "Teleop4890")
 public class CurrentAutonomous4890 extends LinearOpMode {
-
     OpenCvInternalCamera phoneCam;
     SkystoneDeterminationPipeline pipeline;
-    private DcMotor driveFrontRight;
-    private DcMotor driveFrontLeft;
-    private DcMotor driveBackRight;
-    private DcMotor driveBackLeft;
-    private DcMotor outtakeLeft;
-    private DcMotor Intake;
-    private DcMotor Arm;
-    private Servo Claw;
-    private Servo platformRight;
-    private Servo platformLeft;
-    private Servo pusher;
+    Robot robot = new Robot();
 
     int ringNumber;
     boolean detection = true;
 
     @Override
-    public void runOpMode() {
+    public void runOpMode() throws InterruptedException {
 
-        driveFrontRight = hardwareMap.dcMotor.get("driveFrontRight");
-        driveFrontLeft = hardwareMap.dcMotor.get("driveFrontLeft");
-        driveBackRight = hardwareMap.dcMotor.get("driveBackRight");
-        driveBackLeft = hardwareMap.dcMotor.get("driveBackLeft");
-        outtakeLeft = hardwareMap.dcMotor.get("outtakeLeft");
-        Intake = hardwareMap.dcMotor.get("Intake");
-        Arm = hardwareMap.dcMotor.get("Arm");
-        Claw = hardwareMap.servo.get("Claw");
-        platformRight = hardwareMap.servo.get("platformRight");
-        platformLeft = hardwareMap.servo.get("platformLeft");
-        pusher = hardwareMap.servo.get("pusher");
-
-        driveFrontLeft.setDirection(DcMotor.Direction.FORWARD);
-        driveBackLeft.setDirection(DcMotor.Direction.FORWARD);
-        Intake.setDirection(DcMotor.Direction.FORWARD);
-        Arm.setDirection(DcMotor.Direction.FORWARD);
-        outtakeLeft.setDirection(DcMotor.Direction.FORWARD);
-        driveFrontRight.setDirection(DcMotor.Direction.REVERSE);
-        driveBackRight.setDirection(DcMotor.Direction.REVERSE);
-        Claw.setPosition(1);
-        platformRight.setPosition(0);
-        platformLeft.setPosition(1);
-        pusher.setPosition(1);
+        robot.init(hardwareMap);
+        robot.driveFrontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.driveBackLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.driveFrontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.driveBackRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         //initializes the camera and sets it up for which camera will be used.
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
@@ -75,12 +45,9 @@ public class CurrentAutonomous4890 extends LinearOpMode {
         // landscape orientation, though.
         phoneCam.setViewportRenderingPolicy(OpenCvCamera.ViewportRenderingPolicy.OPTIMIZE_VIEW);
 
-        phoneCam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
-            @Override
-            public void onOpened() {
-                phoneCam.startStreaming(320, 240, OpenCvCameraRotation.SIDEWAYS_LEFT);
-                phoneCam.setFlashlightEnabled(true);
-            }
+        phoneCam.openCameraDeviceAsync(() -> {
+            phoneCam.startStreaming(320, 240, OpenCvCameraRotation.SIDEWAYS_LEFT);
+            phoneCam.setFlashlightEnabled(true);
         });
 
         waitForStart();
@@ -101,15 +68,16 @@ public class CurrentAutonomous4890 extends LinearOpMode {
                     detection = false;
                 }
             }
+
             if (ringNumber == 0) {
                 armDown(1050);
                 straight(1, 3310);
                 strafeRight(1, 600);
-                Release(500);
+                robot.release(500);
                 strafeLeft(1, 970);
                 rotate(-1, 535);
                 strafeRight(1, 2770);
-                Grab(500);
+                robot.grab(500);
                 strafeLeft(1, 2650);
                 rotate(1, 650);
                 strafeRight(1, 930);
@@ -118,7 +86,7 @@ public class CurrentAutonomous4890 extends LinearOpMode {
                 strafeRight(1, 350);
                 straight(1, 4100);
                 strafeLeft(1, 1400);
-                Release(700);
+                robot.release(700);
                 strafeLeft(1, 1300);
                 straight(-1, 1200);
             } else if (ringNumber == 4) {
@@ -126,7 +94,7 @@ public class CurrentAutonomous4890 extends LinearOpMode {
                 strafeRight(1, 350);
                 straight(1, 4800);
                 rotate(1, 500);
-                Release(500);
+                robot.release(500);
                 strafeLeft(1, 2000);
                 straight(-1, 300);
             }
@@ -173,7 +141,7 @@ public class CurrentAutonomous4890 extends LinearOpMode {
         int avg1;
 
         // Volatile since accessed by OpMode thread w/o synchronization
-        private volatile RingPosition position = RingPosition.FOUR;
+        private volatile SkystoneDeterminationPipeline.RingPosition position = SkystoneDeterminationPipeline.RingPosition.FOUR;
 
         // This function takes the RGB frame, converts to YCrCb,
         // and extracts the Cb channel to the 'Cb' variable
@@ -202,13 +170,13 @@ public class CurrentAutonomous4890 extends LinearOpMode {
                     BLUE, // The color the rectangle is drawn in
                     2); // Thickness of the rectangle lines
 
-            position = RingPosition.FOUR; // Record our analysis
+            position = SkystoneDeterminationPipeline.RingPosition.FOUR; // Record our analysis
             if (avg1 > FOUR_RING_THRESHOLD) {
-                position = RingPosition.FOUR;
+                position = SkystoneDeterminationPipeline.RingPosition.FOUR;
             } else if (avg1 > ONE_RING_THRESHOLD) {
-                position = RingPosition.ONE;
+                position = SkystoneDeterminationPipeline.RingPosition.ONE;
             } else {
-                position = RingPosition.NONE;
+                position = SkystoneDeterminationPipeline.RingPosition.NONE;
             }
 
             Imgproc.rectangle(
@@ -227,91 +195,81 @@ public class CurrentAutonomous4890 extends LinearOpMode {
     }
 
     void straight(double power, int milliseconds) {
-        driveFrontLeft.setPower(-power);
-        driveBackLeft.setPower(-power);
-        driveFrontRight.setPower(-power);
-        driveBackRight.setPower(-power);
+        robot.driveFrontLeft.setPower(-power);
+        robot.driveBackLeft.setPower(-power);
+        robot.driveFrontRight.setPower(-power);
+        robot.driveBackRight.setPower(-power);
         sleep(milliseconds);
-        driveFrontLeft.setPower(0);
-        driveBackLeft.setPower(0);
-        driveFrontRight.setPower(0);
-        driveBackRight.setPower(0);
+        robot.driveFrontLeft.setPower(0);
+        robot.driveBackLeft.setPower(0);
+        robot.driveFrontRight.setPower(0);
+        robot.driveBackRight.setPower(0);
     }
 
     void strafeLeft(double power, int milliseconds) {
-        driveFrontRight.setPower(-power);
-        driveFrontLeft.setPower(power);
-        driveBackRight.setPower(power);
-        driveBackLeft.setPower(-power);
+        robot.driveFrontRight.setPower(-power);
+        robot.driveFrontLeft.setPower(power);
+        robot.driveBackRight.setPower(power);
+        robot.driveBackLeft.setPower(-power);
         sleep(milliseconds);
-        driveFrontLeft.setPower(0);
-        driveBackLeft.setPower(0);
-        driveFrontRight.setPower(0);
-        driveBackRight.setPower(0);
+        robot.driveFrontLeft.setPower(0);
+        robot.driveBackLeft.setPower(0);
+        robot.driveFrontRight.setPower(0);
+        robot.driveBackRight.setPower(0);
     }
 
     void strafeRight(double power, int milliseconds) {
-        driveFrontRight.setPower(power);
-        driveFrontLeft.setPower(-power);
-        driveBackRight.setPower(-power);
-        driveBackLeft.setPower(power);
+        robot.driveFrontRight.setPower(power);
+        robot.driveFrontLeft.setPower(-power);
+        robot.driveBackRight.setPower(-power);
+        robot.driveBackLeft.setPower(power);
         sleep(milliseconds);
-        driveFrontLeft.setPower(0);
-        driveBackLeft.setPower(0);
-        driveFrontRight.setPower(0);
-        driveBackRight.setPower(0);
+        robot.driveFrontLeft.setPower(0);
+        robot.driveBackLeft.setPower(0);
+        robot.driveFrontRight.setPower(0);
+        robot.driveBackRight.setPower(0);
     }
 
     void rotate(double power, int milliseconds) { //note: default rotate clockwise
-        driveFrontRight.setPower(-power);
-        driveFrontLeft.setPower(power);
-        driveBackRight.setPower(-power);
-        driveBackLeft.setPower(power);
+        robot.driveFrontRight.setPower(-power);
+        robot.driveFrontLeft.setPower(power);
+        robot.driveBackRight.setPower(-power);
+        robot.driveBackLeft.setPower(power);
         sleep(milliseconds);
-        driveFrontLeft.setPower(0);
-        driveBackLeft.setPower(0);
-        driveFrontRight.setPower(0);
-        driveBackRight.setPower(0);
+        robot.driveFrontLeft.setPower(0);
+        robot.driveBackLeft.setPower(0);
+        robot.driveFrontRight.setPower(0);
+        robot.driveBackRight.setPower(0);
     }
 
     void platformUp(int milliseconds) {
-        platformRight.setPosition(0.24);
-        platformLeft.setPosition(0.76);
+        robot.platformRight.setPosition(0.24);
+        robot.platformLeft.setPosition(0.76);
         sleep(milliseconds);
     }
 
     void platformDown(int milliseconds) {
-        platformRight.setPosition(0);
-        platformLeft.setPosition(1);
+        robot.platformRight.setPosition(0);
+        robot.platformLeft.setPosition(1);
         sleep(milliseconds);
     }
 
     void outtakePush(int milliseconds) {
-        pusher.setPosition(0.5);
+        robot.pusher.setPosition(0.5);
         sleep(400);
-        pusher.setPosition(1);
+        robot.pusher.setPosition(1);
         sleep(milliseconds);
     }
 
     void armUp(int milliseconds) {
-        Arm.setPower(0.5);
+        robot.Arm.setPower(0.5);
         sleep(milliseconds);
-        Arm.setPower(0);
+        robot.Arm.setPower(0);
     }
 
     void armDown(int milliseconds) {
-        Arm.setPower(-0.5);
+        robot.Arm.setPower(-0.5);
         sleep(milliseconds);
-        Arm.setPower(0);
-    }
-
-    void Grab(int milliseconds) {
-        Claw.setPosition(1);
-        sleep(milliseconds);
-    }
-
-    void Release(int milliseconds) {
-        Claw.setPosition(0);
-        sleep(milliseconds);
+        robot.Arm.setPower(0);
     }
 }

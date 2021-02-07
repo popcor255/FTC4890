@@ -17,7 +17,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvInternalCamera;
 import org.openftc.easyopencv.OpenCvPipeline;
 
-@Autonomous(name = "Autonomous4890")
+@Autonomous(name = "Autonomous4890", preselectTeleOp = "Teleop4890")
 public class Autonomous4890 extends LinearOpMode {
 
     OpenCvInternalCamera phoneCam;
