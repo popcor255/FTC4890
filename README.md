@@ -18,7 +18,7 @@ This repository will primarily be used by members of 4890 so that the code can b
 
 # Release Information
 
-# Versoin 2.0 (February 7, 2021)
+# Version 2.0 (February 7, 2021)
 
 ## Additions
 
