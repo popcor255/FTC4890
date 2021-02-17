@@ -49,6 +49,24 @@ public class Teleop4890 extends LinearOpMode {
             robot.driveBackLeft.setPower(BackLeftVal);
             robot.driveBackRight.setPower(BackRightVal);
 
+            if (gamepad1.left_trigger != 0) {
+                strafeLeft();
+            } else {
+                robot.driveFrontLeft.setPower(0);
+                robot.driveBackLeft.setPower(0);
+                robot.driveFrontRight.setPower(0);
+                robot.driveBackRight.setPower(0);
+            }
+
+            if (gamepad1.right_trigger != 0) {
+                strafeRight();
+            } else {
+                robot.driveFrontLeft.setPower(0);
+                robot.driveBackLeft.setPower(0);
+                robot.driveFrontRight.setPower(0);
+                robot.driveBackRight.setPower(0);
+            }
+
             //intake toggles
             if (gamepad1.right_bumper) { //on (intakes)
                 robot.Intake.setPower(1);
@@ -87,8 +105,8 @@ public class Teleop4890 extends LinearOpMode {
 
             //platform launcher controls
             if (gamepad2.dpad_up) { //angles it upward
-                robot.platformRight.setPosition(0.805);
-                robot.platformLeft.setPosition(0.805);
+                robot.platformRight.setPosition(0.79);
+                robot.platformLeft.setPosition(0.81);
             }
             if (gamepad2.dpad_down) { //angles it down
                 robot.platformRight.setPosition(0.6);
@@ -123,5 +141,19 @@ public class Teleop4890 extends LinearOpMode {
         robot.pusher.setPosition(0.8);
         sleep(400);
         robot.pusher.setPosition(1);
+    }
+
+    void strafeLeft() {
+        robot.driveFrontRight.setPower(gamepad1.left_trigger);
+        robot.driveFrontLeft.setPower(-gamepad1.left_trigger);
+        robot.driveBackRight.setPower(-gamepad1.left_trigger);
+        robot.driveBackLeft.setPower(gamepad1.left_trigger);
+    }
+
+    void strafeRight() {
+        robot.driveFrontRight.setPower(-gamepad1.right_trigger);
+        robot.driveFrontLeft.setPower(gamepad1.right_trigger);
+        robot.driveBackRight.setPower(gamepad1.right_trigger);
+        robot.driveBackLeft.setPower(-gamepad1.right_trigger);
     }
 }

@@ -36,14 +36,9 @@ public class ThresholdTesting extends LinearOpMode
         // landscape orientation, though.
         phoneCam.setViewportRenderingPolicy(OpenCvCamera.ViewportRenderingPolicy.OPTIMIZE_VIEW);
 
-        phoneCam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener()
-        {
-            @Override
-            public void onOpened()
-            {
-                phoneCam.startStreaming(320,240, OpenCvCameraRotation.SIDEWAYS_LEFT);
-                phoneCam.setFlashlightEnabled(true);
-            }
+        phoneCam.openCameraDeviceAsync(() -> {
+            phoneCam.startStreaming(320,240, OpenCvCameraRotation.SIDEWAYS_LEFT);
+            phoneCam.setFlashlightEnabled(true);
         });
 
         waitForStart();
@@ -80,13 +75,13 @@ public class ThresholdTesting extends LinearOpMode
         /*
          * The core values which define the location and size of the sample regions
          */
-        static final Point REGION1_TOPLEFT_ANCHOR_POINT = new Point(215,55);
+        static final Point REGION1_TOPLEFT_ANCHOR_POINT = new Point(205,58);
 
         static final int REGION_WIDTH = 35;
         static final int REGION_HEIGHT = 25;
 
-        final int FOUR_RING_THRESHOLD = 142;
-        final int ONE_RING_THRESHOLD = 130;
+        final int FOUR_RING_THRESHOLD = 150;
+        final int ONE_RING_THRESHOLD = 135;
 
         Point region1_pointA = new Point(
                 REGION1_TOPLEFT_ANCHOR_POINT.x,

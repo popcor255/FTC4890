@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
@@ -25,14 +26,19 @@ public class CurrentAutonomous4890 extends LinearOpMode {
     int ringNumber;
     boolean detection = true;
 
+    public DcMotor driveFrontRight;
+    public DcMotor driveFrontLeft;
+    public DcMotor driveBackRight;
+    public DcMotor driveBackLeft;
+
     @Override
     public void runOpMode() throws InterruptedException {
 
         robot.init(hardwareMap);
-        robot.driveFrontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        robot.driveBackLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        robot.driveFrontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        robot.driveBackRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        driveFrontRight = hardwareMap.get(DcMotor.class,"driveFrontRight");
+        driveFrontLeft = hardwareMap.get(DcMotor.class,"driveFrontLeft");
+        driveBackRight = hardwareMap.get(DcMotor.class,"driveBackRight");
+        driveBackLeft = hardwareMap.get(DcMotor.class,"driveBackLeft");
 
         //initializes the camera and sets it up for which camera will be used.
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
@@ -119,13 +125,13 @@ public class CurrentAutonomous4890 extends LinearOpMode {
         // The core values which define the location and size of the sample regions
         // topleft = where the topleft point of the analysis region begins
         // region width & height determines the analysis' dimensions
-        static final Point REGION1_TOPLEFT_ANCHOR_POINT = new Point(215, 55);
+        static final Point REGION1_TOPLEFT_ANCHOR_POINT = new Point(205, 58);
 
         static final int REGION_WIDTH = 35;
         static final int REGION_HEIGHT = 25;
 
-        final int FOUR_RING_THRESHOLD = 142;
-        final int ONE_RING_THRESHOLD = 130;
+        final int FOUR_RING_THRESHOLD = 150;
+        final int ONE_RING_THRESHOLD = 135;
 
         Point region1_pointA = new Point(
                 REGION1_TOPLEFT_ANCHOR_POINT.x,
