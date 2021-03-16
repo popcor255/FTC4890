@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
@@ -26,19 +27,11 @@ public class CurrentAutonomous4890 extends LinearOpMode {
     int ringNumber;
     boolean detection = true;
 
-    public DcMotor driveFrontRight;
-    public DcMotor driveFrontLeft;
-    public DcMotor driveBackRight;
-    public DcMotor driveBackLeft;
-
     @Override
     public void runOpMode() throws InterruptedException {
 
         robot.init(hardwareMap);
-        driveFrontRight = hardwareMap.get(DcMotor.class,"driveFrontRight");
-        driveFrontLeft = hardwareMap.get(DcMotor.class,"driveFrontLeft");
-        driveBackRight = hardwareMap.get(DcMotor.class,"driveBackRight");
-        driveBackLeft = hardwareMap.get(DcMotor.class,"driveBackLeft");
+
 
         //initializes the camera and sets it up for which camera will be used.
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
@@ -76,33 +69,47 @@ public class CurrentAutonomous4890 extends LinearOpMode {
             }
 
             if (ringNumber == 0) {
-                armDown(1050);
-                straight(1, 3310);
-                strafeRight(1, 600);
-                robot.release(500);
-                strafeLeft(1, 970);
-                rotate(-1, 535);
-                strafeRight(1, 2770);
-                robot.grab(500);
-                strafeLeft(1, 2650);
-                rotate(1, 650);
-                strafeRight(1, 930);
+                straight(1, 600);
+                sleep(1000);
+                armDown(700);
+                robot.release(800);
+                strafeLeft(1, 450);
+                sleep(1000);
+                straight(-1, 200);
+                platformUp(100);
+                robot.outtakeLeft.setPower(1);
+                sleep(1000);
+                outtakePush(500);
+                outtakePush(500);
+                outtakePush(500);
+                straight(1,100);
             } else if (ringNumber == 1) {
-                armDown(1050);
-                strafeRight(1, 350);
-                straight(1, 4100);
-                strafeLeft(1, 1400);
-                robot.release(700);
-                strafeLeft(1, 1300);
-                straight(-1, 1200);
-            } else if (ringNumber == 4) {
-                armDown(1050);
-                strafeRight(1, 350);
-                straight(1, 4800);
-                rotate(1, 500);
-                robot.release(500);
-                strafeLeft(1, 2000);
+                strafeRight(1, 150);
+                straight(1, 1100);
+                strafeLeft(1, 400);
+                armDown(700);
+                robot.release(800);
                 straight(-1, 300);
+                platformUp(100);
+                robot.outtakeLeft.setPower(1);
+                sleep(1000);
+                outtakePush(250);
+                outtakePush(250);
+                outtakePush(250);
+                straight(1,100);
+            } else if (ringNumber == 4) {
+                strafeRight(1, 150);
+                straight(1, 2000);
+                armDown(700);
+                robot.release(800);
+                strafeLeft(1, 300);
+                straight(-1, 500);
+                platformUp(100);
+                robot.outtakeLeft.setPower(1);
+                sleep(1000);
+                outtakePush(250);
+                outtakePush(250);
+                outtakePush(250);
             }
 
             stop();
@@ -131,7 +138,7 @@ public class CurrentAutonomous4890 extends LinearOpMode {
         static final int REGION_HEIGHT = 25;
 
         final int FOUR_RING_THRESHOLD = 150;
-        final int ONE_RING_THRESHOLD = 135;
+        final int ONE_RING_THRESHOLD = 140;
 
         Point region1_pointA = new Point(
                 REGION1_TOPLEFT_ANCHOR_POINT.x,
@@ -249,32 +256,32 @@ public class CurrentAutonomous4890 extends LinearOpMode {
     }
 
     void platformUp(int milliseconds) {
-        robot.platformRight.setPosition(0.24);
-        robot.platformLeft.setPosition(0.76);
+        robot.platformRight.setPosition(0.79);
+        robot.platformLeft.setPosition(0.81);
         sleep(milliseconds);
     }
 
     void platformDown(int milliseconds) {
-        robot.platformRight.setPosition(0);
+        robot.platformRight.setPosition(0.6);
         robot.platformLeft.setPosition(1);
         sleep(milliseconds);
     }
 
     void outtakePush(int milliseconds) {
-        robot.pusher.setPosition(0.5);
+        robot.pusher.setPosition(0.8);
         sleep(400);
         robot.pusher.setPosition(1);
         sleep(milliseconds);
     }
 
     void armUp(int milliseconds) {
-        robot.Arm.setPower(0.5);
+        robot.Arm.setPower(-0.5);
         sleep(milliseconds);
         robot.Arm.setPower(0);
     }
 
     void armDown(int milliseconds) {
-        robot.Arm.setPower(-0.5);
+        robot.Arm.setPower(0.5);
         sleep(milliseconds);
         robot.Arm.setPower(0);
     }

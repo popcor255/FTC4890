@@ -144,16 +144,16 @@ public class Teleop4890 extends LinearOpMode {
     }
 
     void strafeLeft() {
-        robot.driveFrontRight.setPower(gamepad1.left_trigger);
-        robot.driveFrontLeft.setPower(-gamepad1.left_trigger);
-        robot.driveBackRight.setPower(-gamepad1.left_trigger);
-        robot.driveBackLeft.setPower(gamepad1.left_trigger);
+        robot.driveFrontRight.setPower(-gamepad1.left_trigger);
+        robot.driveFrontLeft.setPower(gamepad1.left_trigger);
+        robot.driveBackRight.setPower(gamepad1.left_trigger);
+        robot.driveBackLeft.setPower(-gamepad1.left_trigger);
     }
 
     void strafeRight() {
-        robot.driveFrontRight.setPower(-gamepad1.right_trigger);
-        robot.driveFrontLeft.setPower(gamepad1.right_trigger);
-        robot.driveBackRight.setPower(gamepad1.right_trigger);
-        robot.driveBackLeft.setPower(-gamepad1.right_trigger);
+        robot.driveFrontRight.setPower(gamepad1.right_trigger);
+        robot.driveFrontLeft.setPower(-gamepad1.right_trigger);
+        robot.driveBackRight.setPower(-gamepad1.right_trigger);
+        robot.driveBackLeft.setPower(gamepad1.right_trigger);
     }
 }

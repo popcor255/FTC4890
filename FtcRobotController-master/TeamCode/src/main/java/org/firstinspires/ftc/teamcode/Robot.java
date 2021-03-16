@@ -31,6 +31,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -75,10 +76,10 @@ public class Robot {
         imu.initialize(parameters);
 
         // Define and Initialize Motors
-        driveFrontRight = hwMap.dcMotor.get("driveFrontRight");
-        driveFrontLeft = hwMap.dcMotor.get("driveFrontLeft");
-        driveBackRight = hwMap.dcMotor.get("driveBackRight");
-        driveBackLeft = hwMap.dcMotor.get("driveBackLeft");
+        driveBackLeft = hwMap.get(DcMotor.class, "driveBackLeft");
+        driveFrontLeft = hwMap.get(DcMotor.class, "driveFrontLeft");
+        driveBackRight = hwMap.get(DcMotor.class, "driveBackRight");
+        driveFrontRight = hwMap.get(DcMotor.class, "driveFrontRight");
         Intake = hwMap.dcMotor.get("Intake");
         outtakeLeft = hwMap.dcMotor.get("outtakeLeft");
         Arm = hwMap.dcMotor.get("Arm");
