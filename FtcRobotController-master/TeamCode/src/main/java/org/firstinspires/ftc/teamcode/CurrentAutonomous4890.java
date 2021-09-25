@@ -44,9 +44,16 @@ public class CurrentAutonomous4890 extends LinearOpMode {
         // landscape orientation, though.
         phoneCam.setViewportRenderingPolicy(OpenCvCamera.ViewportRenderingPolicy.OPTIMIZE_VIEW);
 
-        phoneCam.openCameraDeviceAsync(() -> {
-            phoneCam.startStreaming(320, 240, OpenCvCameraRotation.SIDEWAYS_LEFT);
-            phoneCam.setFlashlightEnabled(true);
+        phoneCam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener(){
+
+            @Override
+            public void onOpened() {
+                phoneCam.startStreaming(320, 240, OpenCvCameraRotation.SIDEWAYS_LEFT);
+                phoneCam.setFlashlightEnabled(true);
+            }
+            @Override
+            public void onError(int errorCode) {
+            }
         });
 
         waitForStart();
@@ -69,47 +76,65 @@ public class CurrentAutonomous4890 extends LinearOpMode {
             }
 
             if (ringNumber == 0) {
-                straight(1, 600);
+                straight(1, 570);
                 sleep(1000);
-                armDown(700);
+                armDown(750);
                 robot.release(800);
-                strafeLeft(1, 450);
+                strafeLeft(1, 350);
                 sleep(1000);
-                straight(-1, 200);
+                straight(-1, 160);
                 platformUp(100);
-                robot.outtakeLeft.setPower(1);
+                robot.outtakeLeft.setPower(0.87);
                 sleep(1000);
-                outtakePush(500);
-                outtakePush(500);
-                outtakePush(500);
-                straight(1,100);
+                outtakePush(800);
+                outtakePush(800);
+                outtakePush(800);
+                straight(1,120);
             } else if (ringNumber == 1) {
-                strafeRight(1, 150);
-                straight(1, 1100);
-                strafeLeft(1, 400);
-                armDown(700);
+                strafeRight(1,525);
+                sleep(750);
+                rotate(0.5,5);
+                sleep(50);
+                straight(1, 840);
+                sleep(1100);
+                strafeLeft(1, 950);
+                sleep(300);
+                armDown(1000);
                 robot.release(800);
-                straight(-1, 300);
-                platformUp(100);
-                robot.outtakeLeft.setPower(1);
+                strafeLeft(1,200);
+                armUp(700);
                 sleep(1000);
-                outtakePush(250);
-                outtakePush(250);
-                outtakePush(250);
+                straight(-1, 300);
+                sleep(400);
+                strafeRight(1,375);
+                //rotate(-0.5, 40);
+                sleep(100);
+                platformUp(100);
+                robot.outtakeLeft.setPower(0.87);
+                sleep(1000);
+                outtakePush(800);
+                outtakePush(800);
+                outtakePush(800);
                 straight(1,100);
             } else if (ringNumber == 4) {
-                strafeRight(1, 150);
-                straight(1, 2000);
-                armDown(700);
-                robot.release(800);
-                strafeLeft(1, 300);
-                straight(-1, 500);
-                platformUp(100);
-                robot.outtakeLeft.setPower(1);
+                strafeRight(1,400);
+                sleep(750);
+                rotate(1,1);
+                sleep(50);
+                straight(1, 1200);
                 sleep(1000);
-                outtakePush(250);
-                outtakePush(250);
-                outtakePush(250);
+                armDown(1000);
+                robot.release(800);
+                sleep(1000);
+                strafeLeft(1,340);
+                straight(-1, 460);
+                platformUp(100);
+                robot.outtakeLeft.setPower(0.87);
+                sleep(1000);
+                outtakePush(800);
+                outtakePush(800);
+                outtakePush(800);
+                straight(1,100);
             }
 
             stop();
@@ -132,13 +157,13 @@ public class CurrentAutonomous4890 extends LinearOpMode {
         // The core values which define the location and size of the sample regions
         // topleft = where the topleft point of the analysis region begins
         // region width & height determines the analysis' dimensions
-        static final Point REGION1_TOPLEFT_ANCHOR_POINT = new Point(205, 58);
+        static final Point REGION1_TOPLEFT_ANCHOR_POINT = new Point(185, 58);
 
         static final int REGION_WIDTH = 35;
         static final int REGION_HEIGHT = 25;
 
-        final int FOUR_RING_THRESHOLD = 150;
-        final int ONE_RING_THRESHOLD = 140;
+        final int FOUR_RING_THRESHOLD = 160;
+        final int ONE_RING_THRESHOLD = 145;
 
         Point region1_pointA = new Point(
                 REGION1_TOPLEFT_ANCHOR_POINT.x,
@@ -154,7 +179,7 @@ public class CurrentAutonomous4890 extends LinearOpMode {
         int avg1;
 
         // Volatile since accessed by OpMode thread w/o synchronization
-        private volatile SkystoneDeterminationPipeline.RingPosition position = SkystoneDeterminationPipeline.RingPosition.FOUR;
+        private volatile RingPosition position = RingPosition.FOUR;
 
         // This function takes the RGB frame, converts to YCrCb,
         // and extracts the Cb channel to the 'Cb' variable
@@ -183,13 +208,13 @@ public class CurrentAutonomous4890 extends LinearOpMode {
                     BLUE, // The color the rectangle is drawn in
                     2); // Thickness of the rectangle lines
 
-            position = SkystoneDeterminationPipeline.RingPosition.FOUR; // Record our analysis
+            position = RingPosition.FOUR; // Record our analysis
             if (avg1 > FOUR_RING_THRESHOLD) {
-                position = SkystoneDeterminationPipeline.RingPosition.FOUR;
+                position = RingPosition.FOUR;
             } else if (avg1 > ONE_RING_THRESHOLD) {
-                position = SkystoneDeterminationPipeline.RingPosition.ONE;
+                position = RingPosition.ONE;
             } else {
-                position = SkystoneDeterminationPipeline.RingPosition.NONE;
+                position = RingPosition.NONE;
             }
 
             Imgproc.rectangle(
@@ -221,7 +246,7 @@ public class CurrentAutonomous4890 extends LinearOpMode {
 
     void strafeLeft(double power, int milliseconds) {
         robot.driveFrontRight.setPower(-power);
-        robot.driveFrontLeft.setPower(power);
+        robot.driveFrontLeft.setPower(power * 0.5);
         robot.driveBackRight.setPower(power);
         robot.driveBackLeft.setPower(-power);
         sleep(milliseconds);
@@ -243,7 +268,7 @@ public class CurrentAutonomous4890 extends LinearOpMode {
         robot.driveBackRight.setPower(0);
     }
 
-    void rotate(double power, int milliseconds) { //note: default rotate clockwise
+    void rotate(double power, int milliseconds) { //note: default rotate counter clockwise
         robot.driveFrontRight.setPower(-power);
         robot.driveFrontLeft.setPower(power);
         robot.driveBackRight.setPower(-power);
@@ -268,7 +293,7 @@ public class CurrentAutonomous4890 extends LinearOpMode {
     }
 
     void outtakePush(int milliseconds) {
-        robot.pusher.setPosition(0.8);
+        robot.pusher.setPosition(0.85);
         sleep(400);
         robot.pusher.setPosition(1);
         sleep(milliseconds);
