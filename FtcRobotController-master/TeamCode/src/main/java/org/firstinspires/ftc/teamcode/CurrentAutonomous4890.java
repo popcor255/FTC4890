@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+/*package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -311,3 +311,4 @@ public class CurrentAutonomous4890 extends LinearOpMode {
         robot.Arm.setPower(0);
     }
 }
+*/
