@@ -106,6 +106,24 @@ public class Teleop4890 extends LinearOpMode {
                 robot.claw.setPower(0);
             }
 
+            //claw intake
+            if (gamepad2.a) {
+                robot.clawLeft.setPower(0);
+                robot.clawRight.setPower(1);
+            } else {
+                robot.clawLeft.setPower(0.5);
+                robot.clawRight.setPower(0.5);
+            }
+
+            //claw outtake
+            if (gamepad2.y) {
+                robot.clawLeft.setPower(1);
+                robot.clawRight.setPower(0);
+            } else {
+                robot.clawLeft.setPower(0.5);
+                robot.clawRight.setPower(0.5);
+            }
+
             idle();
         }
     }
