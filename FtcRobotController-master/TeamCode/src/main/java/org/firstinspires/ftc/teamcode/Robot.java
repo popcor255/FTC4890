@@ -90,7 +90,7 @@ public class Robot {
 
         // Define and initialize ALL installed servos.
         clawRight = hwMap.crservo.get("clawRight");
-        clawLeft = hwMap.crservo.get("cLawLeft");
+        clawLeft = hwMap.crservo.get("clawLeft");
     }
 
     public void sleep(long milliseconds) {
