@@ -87,10 +87,8 @@ public class Robot {
         pivot.setDirection(DcMotor.Direction.FORWARD);
         claw.setDirection(DcMotor.Direction.FORWARD);
         arm.setDirection(DcMotorSimple.Direction.FORWARD);
-
-        // Define and initialize ALL installed servos.
-        clawRight = hwMap.crservo.get("clawRight");
-        clawLeft = hwMap.crservo.get("clawLeft");
+        clawLeft.setDirection(DcMotorSimple.Direction.FORWARD);
+        clawRight.setDirection(DcMotorSimple.Direction.FORWARD);
     }
 
     public void sleep(long milliseconds) {
