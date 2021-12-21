@@ -30,7 +30,10 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -38,18 +41,15 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 public class Robot {
 
     /* Public OpMode members. */
-    public DcMotor driveFrontRight;
-    public DcMotor driveFrontLeft;
-    public DcMotor driveBackRight;
-    public DcMotor driveBackLeft;
-    public DcMotor outtakeLeft;
-    public DcMotor Intake;
-    public DcMotor Arm;
-    public Servo Claw;
-    public Servo platformRight;
-    public Servo platformLeft;
-    public Servo pusher;
-    public BNO055IMU imu;
+    public DcMotor frontRight;
+    public DcMotor backRight;
+    public DcMotor frontLeft;
+    public DcMotor backLeft;
+    public DcMotor arm;
+    public DcMotor pivot;
+    public DcMotor carousel;
+    public CRServo claw;
+    public CRServo clawGrab;
 
     /* local OpMode members. */
     HardwareMap hwMap = null;
@@ -65,42 +65,27 @@ public class Robot {
         // Save reference to Hardware map
         hwMap = ahwMap;
 
-        // IMU parameters
-        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
-        parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
-        parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
-
-        // Retrieve and initialize IMU
-        imu = hwMap.get(BNO055IMU.class, "imu");
-        imu.initialize(parameters);
-
         // Define and Initialize Motors
-        driveFrontRight = hwMap.dcMotor.get("driveFrontRight");
-        driveFrontLeft = hwMap.dcMotor.get("driveFrontLeft");
-        driveBackRight = hwMap.dcMotor.get("driveBackRight");
-        driveBackLeft = hwMap.dcMotor.get("driveBackLeft");
-        Intake = hwMap.dcMotor.get("Intake");
-        outtakeLeft = hwMap.dcMotor.get("outtakeLeft");
-        Arm = hwMap.dcMotor.get("Arm");
+        frontRight = hwMap.get(DcMotor.class, "frontRight");
+        backLeft = hwMap.get(DcMotor.class, "backLeft");
+        frontLeft = hwMap.get(DcMotor.class, "frontLeft");
+        backRight = hwMap.get(DcMotor.class, "backRight");
+        claw = hwMap.crservo.get("claw");
+        clawGrab = hwMap.crservo.get("clawGrab");
+        arm = hwMap.dcMotor.get("arm");
+        pivot = hwMap.dcMotor.get("pivot");
+        carousel = hwMap.dcMotor.get("carousel");
 
         // Setting motor directions
-        driveFrontLeft.setDirection(DcMotor.Direction.REVERSE);
-        driveBackLeft.setDirection(DcMotor.Direction.REVERSE);
-        Intake.setDirection(DcMotor.Direction.FORWARD);
-        Arm.setDirection(DcMotor.Direction.FORWARD);
-        driveFrontRight.setDirection(DcMotor.Direction.FORWARD);
-        driveBackRight.setDirection(DcMotor.Direction.FORWARD);
-        outtakeLeft.setDirection(DcMotor.Direction.FORWARD);
-
-        // Define and initialize ALL installed servos.
-        Claw = hwMap.servo.get("Claw");
-        platformRight = hwMap.servo.get("platformRight");
-        platformLeft = hwMap.servo.get("platformLeft");
-        pusher = hwMap.servo.get("pusher");
-        Claw.setPosition(1);
-        platformRight.setPosition(0.6);
-        platformLeft.setPosition(1);
-        pusher.setPosition(1);
+        frontLeft.setDirection(DcMotor.Direction.REVERSE);
+        backLeft.setDirection(DcMotor.Direction.REVERSE);
+        frontRight.setDirection(DcMotor.Direction.FORWARD);
+        backRight.setDirection(DcMotor.Direction.FORWARD);
+        carousel.setDirection(DcMotor.Direction.FORWARD);
+        pivot.setDirection(DcMotor.Direction.FORWARD);
+        claw.setDirection(DcMotorSimple.Direction.FORWARD);
+        arm.setDirection(DcMotorSimple.Direction.FORWARD);
+        clawGrab.setDirection(DcMotorSimple.Direction.FORWARD);
     }
 
     public void sleep(long milliseconds) {
@@ -109,24 +94,6 @@ public class Robot {
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
-    }
-
-    void grab(int milliseconds) {
-        Claw.setPosition(1);
-        sleep(milliseconds);
-    }
-
-    void grab() {
-        grab(0);
-    }
-
-    void release(int milliseconds) {
-        Claw.setPosition(0);
-        sleep(milliseconds);
-    }
-
-    void release() {
-        release(0);
     }
 }
 

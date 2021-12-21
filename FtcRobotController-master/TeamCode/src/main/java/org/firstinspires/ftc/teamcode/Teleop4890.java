@@ -10,9 +10,6 @@ import java.util.Arrays;
 public class Teleop4890 extends LinearOpMode {
     Robot robot = new Robot();
 
-    double outtakeSpeed = 0;
-
-
     @Override
     public void runOpMode() throws InterruptedException {
 
@@ -23,7 +20,7 @@ public class Teleop4890 extends LinearOpMode {
 
         robot.init(hardwareMap);
 
-        robot.Arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        robot.pivot.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         waitForStart();
 
@@ -44,84 +41,102 @@ public class Teleop4890 extends LinearOpMode {
                 BackLeftVal /= wheelPowers[3];
                 BackRightVal /= wheelPowers[3];
             }
-            robot.driveFrontLeft.setPower(FrontLeftVal);
-            robot.driveFrontRight.setPower(FrontRightVal);
-            robot.driveBackLeft.setPower(BackLeftVal);
-            robot.driveBackRight.setPower(BackRightVal);
+            robot.frontLeft.setPower(FrontLeftVal);
+            robot.frontRight.setPower(FrontRightVal);
+            robot.backLeft.setPower(BackLeftVal);
+            robot.backRight.setPower(BackRightVal);
 
-            //intake toggles
-            if (gamepad1.right_bumper) { //on (intakes)
-                robot.Intake.setPower(1);
-            }
-            if (gamepad1.left_bumper) { //reverses outtake
-                robot.Intake.setPower(-1);
-            }
-            if (gamepad1.y) {
-                robot.Intake.setPower(0); //off
-            }
-
-            //outtake toggles
-            if (gamepad1.a) {
-                outtakeSpeed = 0; //off
-            }
-            if (gamepad1.x) {
-                outtakeSpeed = 1; //fast
-            }
-            if (gamepad1.b) {
-                outtakeSpeed = 0.8; //power shot
-            }
-            outtakeSys();
-
-            //controller 2 functions
-            //arm system for claw
-            if (gamepad2.left_stick_y != 0) {
-                armSys();
+            if (gamepad1.left_trigger != 0) {
+                strafeLeft();
             } else {
-                robot.Arm.setPower(0);
+                robot.frontRight.setPower(0);
+                robot.frontLeft.setPower(0);
+                robot.backLeft.setPower(0);
+                robot.backRight.setPower(0);
             }
 
-            //outtake pusher
+            if (gamepad1.right_trigger != 0) {
+                strafeRight();
+            } else {
+                robot.frontRight.setPower(0);
+                robot.frontLeft.setPower(0);
+                robot.backLeft.setPower(0);
+                robot.backRight.setPower(0);
+            }
+
+            //clockwise carousel
+            if (gamepad1.x) {
+                robot.carousel.setPower(-1);
+            } else {
+                robot.carousel.setPower(0);
+            }
+
+            //counter-clockwise carousel
+            if (gamepad1.b) {
+                robot.carousel.setPower(1);
+            } else {
+                robot.carousel.setPower(0);
+            }
+
+            //Pivot up forward
+            if (gamepad2.right_trigger != 0) {
+                robot.pivot.setPower(gamepad2.right_trigger);
+            } else {
+                robot.pivot.setPower(0);
+            }
+
+            //Pivot up backward
+            if (gamepad2.left_trigger != 0) {
+                robot.pivot.setPower(-gamepad2.left_trigger);
+            } else {
+                robot.pivot.setPower(0);
+            }
+
+            //Arm mover
+            if (gamepad2.left_stick_y != 0) {
+                robot.arm.setPower(-gamepad2.left_stick_y);
+            } else {
+                robot.arm.setPower(0);
+            }
+
+            //Claw mover
+            if (gamepad2.right_stick_y != 0) {
+                robot.claw.setPower(-gamepad2.right_stick_y);
+            } else {
+                robot.claw.setPower(0);
+            }
+
+            //claw intake
             if (gamepad2.a) {
-                outtakePush();
+                robot.clawGrab.setPower(1);
             }
 
-            //platform launcher controls
-            if (gamepad2.dpad_up) { //angles it upward
-                robot.platformRight.setPosition(0.805);
-                robot.platformLeft.setPosition(0.805);
-            }
-            if (gamepad2.dpad_down) { //angles it down
-                robot.platformRight.setPosition(0.6);
-                robot.platformLeft.setPosition(1);
+            //claw outtake
+            if (gamepad2.y) {
+                robot.clawGrab.setPower(-1);
             }
 
-            //claw functions
-            if (gamepad2.y) { //grabs
-                robot.grab();
+            //claw off
+            if (gamepad2.b) {
+                robot.clawGrab.setPower(0);
             }
-            if (gamepad2.b) { //releases
-                robot.release();
-            }
+
             idle();
         }
     }
 
-    //outtake system
-    void outtakeSys() {
-        robot.outtakeLeft.setPower(outtakeSpeed);
+
+    void strafeLeft() {
+        robot.frontLeft.setPower(gamepad1.left_trigger);
+        robot.frontRight.setPower(-gamepad1.left_trigger);
+        robot.backLeft.setPower(-gamepad1.left_trigger);
+        robot.backRight.setPower(gamepad1.left_trigger);
     }
 
-    //Controller 2 Controls:
-    //arm controls
-    void armSys() {
-        robot.Arm.setPower(gamepad2.left_stick_y * 0.5);
-    }
-
-    //ring pusher into outtake
-    //moves to pushing pos for 0.5 seconds before going back to starting pos.
-    void outtakePush() {
-        robot.pusher.setPosition(0.8);
-        sleep(400);
-        robot.pusher.setPosition(1);
+    void strafeRight() {
+        robot.frontLeft.setPower(-gamepad1.right_trigger);
+        robot.frontRight.setPower(gamepad1.right_trigger);
+        robot.backLeft.setPower(gamepad1.right_trigger);
+        robot.backRight.setPower(-gamepad1.right_trigger);
     }
 }
