@@ -34,8 +34,10 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.TouchSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 public class Robot {
@@ -45,12 +47,13 @@ public class Robot {
     public DcMotor backRight;
     public DcMotor frontLeft;
     public DcMotor backLeft;
-    public DcMotor claw;
     public DcMotor arm;
     public DcMotor pivot;
     public DcMotor carousel;
-    public CRServo clawLeft;
-    public CRServo clawRight;
+    public CRServo claw;
+    public CRServo clawGrab;
+    public DigitalChannel armSensor;
+    public DigitalChannel clawSensor;
 
     /* local OpMode members. */
     HardwareMap hwMap = null;
@@ -66,17 +69,21 @@ public class Robot {
         // Save reference to Hardware map
         hwMap = ahwMap;
 
-        // Define and Initialize Motors
+        // Define and Initialize Devices
         frontRight = hwMap.get(DcMotor.class, "frontRight");
         backLeft = hwMap.get(DcMotor.class, "backLeft");
         frontLeft = hwMap.get(DcMotor.class, "frontLeft");
         backRight = hwMap.get(DcMotor.class, "backRight");
-        clawLeft = hwMap.crservo.get("clawLeft");
-        clawRight = hwMap.crservo.get("clawRight");
+        claw = hwMap.crservo.get("claw");
+        clawGrab = hwMap.crservo.get("clawGrab");
         arm = hwMap.dcMotor.get("arm");
-        claw = hwMap.dcMotor.get("claw");
         pivot = hwMap.dcMotor.get("pivot");
         carousel = hwMap.dcMotor.get("carousel");
+        armSensor = hwMap.digitalChannel.get("ArmSensor");
+        clawSensor = hwMap.digitalChannel.get("ClawSensor");
+
+        armSensor.setMode(DigitalChannel.Mode.INPUT);
+        clawSensor.setMode(DigitalChannel.Mode.INPUT);
 
         // Setting motor directions
         frontLeft.setDirection(DcMotor.Direction.REVERSE);
@@ -85,12 +92,9 @@ public class Robot {
         backRight.setDirection(DcMotor.Direction.FORWARD);
         carousel.setDirection(DcMotor.Direction.FORWARD);
         pivot.setDirection(DcMotor.Direction.FORWARD);
-        claw.setDirection(DcMotor.Direction.FORWARD);
+        claw.setDirection(DcMotorSimple.Direction.FORWARD);
         arm.setDirection(DcMotorSimple.Direction.FORWARD);
-
-        // Define and initialize ALL installed servos.
-        clawRight = hwMap.crservo.get("clawRight");
-        clawLeft = hwMap.crservo.get("cLawLeft");
+        clawGrab.setDirection(DcMotorSimple.Direction.FORWARD);
     }
 
     public void sleep(long milliseconds) {
