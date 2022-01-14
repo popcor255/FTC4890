@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
@@ -12,6 +13,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import java.util.ArrayList;
 
+@Disabled
 @Autonomous(name = "AutoRedCVWarehouse", preselectTeleOp = "Teleop4890")
 public class AutoRedCVWarehouse extends LinearOpMode {
 
@@ -137,6 +139,7 @@ public class AutoRedCVWarehouse extends LinearOpMode {
                 moveClaw(1, 1300);
                 robot.pivot.setPower(-0.35);
                 sleep(250);
+                robot.pivot.setPower(0);
                 straight(0.20,300);
 
                 outtake(2000);
@@ -166,11 +169,8 @@ public class AutoRedCVWarehouse extends LinearOpMode {
                 moveClaw(1, 3000);
 
                 robot.arm.setPower(0.9);
-                sleep(200);
-                robot.pivot.setPower(0.35);
-                sleep(2000);
+                sleep(2200);
                 robot.arm.setPower(0);
-                robot.pivot.setPower(0.35);
 
                 outtake(2000);
                 robot.arm.setPower(-0.9);

@@ -121,6 +121,15 @@ public class Teleop4890 extends LinearOpMode {
                 robot.clawGrab.setPower(0);
             }
 
+            // arm stopper
+            if (!robot.armSensor.getState()){
+                robot.arm.setPower(0);
+            }
+
+            if (!robot.clawSensor.getState()){
+                robot.claw.setPower(0);
+            }
+
             idle();
         }
     }

@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
@@ -12,6 +13,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import java.util.ArrayList;
 
+@Disabled
 @Autonomous(name = "EncoderTest", preselectTeleOp = "Teleop4890")
 public class EncoderTest extends LinearOpMode {
 
@@ -135,7 +137,7 @@ public class EncoderTest extends LinearOpMode {
 
             sleep(20);
 
-            straight(0.4, 5000);
+            straight(0.4, 1000);
 
             stop();
         }
