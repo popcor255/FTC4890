@@ -141,7 +141,7 @@ public class EncoderBlueCVCarousel extends LinearOpMode {
                 // low level
                 straight(0.35, 500);
                 rotate(0.5, 320);
-                straight(0.35, 700);
+                straight(0.35, 450);
                 while (robot.clawSensor.getState()) {
                     robot.claw.setPower(1);
                     // moveClaw(1, 2000);
@@ -152,14 +152,14 @@ public class EncoderBlueCVCarousel extends LinearOpMode {
                 robot.pivot.setPower(-0.35);
                 sleep(275);
                 robot.pivot.setPower(0);
-                straight(0.20,310);
+                straight(0.20,400);
 
                 outtake(3000);
                 straight(-0.35,300);
 
-                rotate(0.5, 100);
-                straight(-0.5,2500);
-                carouselClock(4000);
+                rotate(0.5, 200);
+                straight(-0.5,1300);
+                carouselClock(2500);
 
                 rotate(-0.5, 540);
                 straight(0.35, 400);
@@ -167,9 +167,9 @@ public class EncoderBlueCVCarousel extends LinearOpMode {
                 stop();
             } else if (position == 2) {
                 // medium level
-                straight(0.35, 500);
-                rotate(0.5, 320);
-                straight(0.35, 840);
+                straight(0.35, 550);
+                rotate(0.5, 300);
+                straight(0.35, 700);
                 while (robot.clawSensor.getState()) {
                     robot.claw.setPower(1);
                     // moveClaw(1, 2000);
@@ -179,18 +179,18 @@ public class EncoderBlueCVCarousel extends LinearOpMode {
                 outtake(3000);
                 straight(-0.35,300);
 
-                rotate(0.5, 100);
-                straight(-0.5,2500);
-                carouselClock(4000);
+                rotate(0.5, 200);
+                straight(-0.5,1300);
+                carouselClock(2500);
 
                 rotate(-0.5, 540);
                 straight(0.35, 400);
 
                 stop();
             } else if (position == 3) {
-                straight(0.35, 500);
-                rotate(0.5, 350);
-                straight(0.35, 500);
+                straight(0.35, 575);
+                rotate(0.5, 300);
+                straight(0.35, 450);
                 while (robot.clawSensor.getState()) {
                     robot.claw.setPower(1);
                     // moveClaw(1, 3000);
@@ -211,9 +211,9 @@ public class EncoderBlueCVCarousel extends LinearOpMode {
                 robot.arm.setPower(0);
                 straight(-0.35,300);
 
-                rotate(0.5, 100);
-                straight(-0.5,2500);
-                carouselClock(4000);
+                rotate(0.5, 200);
+                straight(-0.5,1300);
+                carouselClock(2500);
 
                 rotate(-0.5, 540);
                 straight(0.35, 400);

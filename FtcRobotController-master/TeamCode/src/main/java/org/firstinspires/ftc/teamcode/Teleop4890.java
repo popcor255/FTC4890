@@ -108,12 +108,12 @@ public class Teleop4890 extends LinearOpMode {
 
             //claw intake
             if (gamepad2.a) {
-                robot.clawGrab.setPower(1);
+                robot.clawGrab.setPower(0.85);
             }
 
             //claw outtake
             if (gamepad2.y) {
-                robot.clawGrab.setPower(-1);
+                robot.clawGrab.setPower(-0.85);
             }
 
             //claw off

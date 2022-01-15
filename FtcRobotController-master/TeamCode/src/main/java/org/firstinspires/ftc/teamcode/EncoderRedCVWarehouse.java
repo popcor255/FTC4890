@@ -138,8 +138,8 @@ public class EncoderRedCVWarehouse extends LinearOpMode {
             if (position == 1) {
                 // low level
                 straight(0.35, 500);
-                rotate(0.5, 320);
-                straight(0.35, 700);
+                rotate(0.5, 270);
+                straight(0.35, 475);
                 // moveClaw(1, 2000);
                 while (robot.clawSensor.getState()) {
                     robot.claw.setPower(1);
@@ -147,21 +147,21 @@ public class EncoderRedCVWarehouse extends LinearOpMode {
                 robot.claw.setPower(0);
 
                 robot.pivot.setPower(-0.35);
-                sleep(275);
+                sleep(270);
                 robot.pivot.setPower(0);
-                straight(0.20,310);
+                straight(0.20,535);
 
                 outtake(3000);
-                straight(-0.20,1300);
-                rotate(-0.5, 735);
-                straight(1, 850);
+                straight(-0.20,1150);
+                rotate(-0.5, 770);
+                straight(1, 900);
 
                 stop();
             } else if (position == 2) {
                 // medium level
-                straight(0.35, 500);
-                rotate(0.5, 320);
-                straight(0.35, 840);
+                straight(0.35, 520);
+                rotate(0.5, 250);
+                straight(0.35, 725);
                 // moveClaw(1, 2000);
                 while (robot.clawSensor.getState()) {
                     robot.claw.setPower(1);
@@ -170,14 +170,14 @@ public class EncoderRedCVWarehouse extends LinearOpMode {
 
                 outtake(3000);
                 straight(-0.20,1300);
-                rotate(-0.5, 640);
+                rotate(-0.5, 850);
                 straight(1, 850);
 
                 stop();
             } else if (position == 3) {
-                straight(0.35, 500);
-                rotate(0.5, 350);
-                straight(0.35, 500);
+                straight(0.35, 575);
+                rotate(0.5, 250);
+                straight(0.35, 300);
                 // moveClaw(1, 3000);
                 while (robot.clawSensor.getState()) {
                     robot.claw.setPower(1);
@@ -198,7 +198,7 @@ public class EncoderRedCVWarehouse extends LinearOpMode {
                 robot.arm.setPower(0);
 
                 straight(-0.20,900);
-                rotate(-0.5, 700);
+                rotate(-0.5, 750);
                 straight(1, 950);
 
                 stop();
