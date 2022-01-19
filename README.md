@@ -1,4 +1,4 @@
-# FTC4890
+# FTC4890 (Hive Voltage 2.0)
 A repository of Team 4890's FTC code!
 
 ## Welcome to all of FTC!
@@ -6,6 +6,16 @@ Here you can find all of the code from Team 4890!
 This repository will primarily be used by members of 4890 so that the code can be shared between team members, though other teams are welcome to utilize the code in better understanding Java and how the team programs the robot! 
 
 # Release Information
+
+# Version 3.0 (December 20, 2021)
+
+## Additions
+
+- Updated TeleOp Code & Autonomous (No Encoders) for this year's season.
+
+## Known Bugs *(to be fixed)*
+
+- Encoder Autonomous Incomplete
 
 # Version 2.0 (February 7, 2021)
 
