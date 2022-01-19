@@ -34,8 +34,10 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.TouchSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 public class Robot {
@@ -50,6 +52,8 @@ public class Robot {
     public DcMotor carousel;
     public CRServo claw;
     public CRServo clawGrab;
+    public DigitalChannel armSensor;
+    public DigitalChannel clawSensor;
 
     /* local OpMode members. */
     HardwareMap hwMap = null;
@@ -65,7 +69,7 @@ public class Robot {
         // Save reference to Hardware map
         hwMap = ahwMap;
 
-        // Define and Initialize Motors
+        // Define and Initialize Devices
         frontRight = hwMap.get(DcMotor.class, "frontRight");
         backLeft = hwMap.get(DcMotor.class, "backLeft");
         frontLeft = hwMap.get(DcMotor.class, "frontLeft");
@@ -75,6 +79,11 @@ public class Robot {
         arm = hwMap.dcMotor.get("arm");
         pivot = hwMap.dcMotor.get("pivot");
         carousel = hwMap.dcMotor.get("carousel");
+        armSensor = hwMap.digitalChannel.get("ArmSensor");
+        clawSensor = hwMap.digitalChannel.get("ClawSensor");
+
+        armSensor.setMode(DigitalChannel.Mode.INPUT);
+        clawSensor.setMode(DigitalChannel.Mode.INPUT);
 
         // Setting motor directions
         frontLeft.setDirection(DcMotor.Direction.REVERSE);

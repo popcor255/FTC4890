@@ -81,10 +81,7 @@ public class EncoderBlueCVWarehouse extends LinearOpMode {
 
         double position = 0;
 
-        waitForStart();
-
-        while (opModeIsActive()) {
-
+        while (!isStarted()) {
             ArrayList<AprilTagDetection> detections = pipeline.getDetectionsUpdate();
 
             // If there's been a new frame...
@@ -134,61 +131,82 @@ public class EncoderBlueCVWarehouse extends LinearOpMode {
 
                 telemetry.update();
             }
-
-            sleep(20);
-
-            if (position == 1) {
-                // low level
-                straight(0.35, 350);
-                rotate(-0.5, 250);
-                straight(0.35, 750);
-                moveClaw(1, 1300);
-                robot.pivot.setPower(-0.35);
-                sleep(250);
-                straight(0.20,300);
-
-                outtake(2000);
-                straight(-0.20,1300);
-                rotate(0.5, 725);
-                straight(1, 850);
-
-                stop();
-            } else if (position == 2) {
-                // medium level
-                straight(0.35, 350);
-                rotate(-0.5, 250);
-                straight(0.35, 750);
-                straight(0.20, 100);
-                moveClaw(1, 2000);
-
-                outtake(2000);
-                straight(-0.20,1300);
-                rotate(0.5, 650);
-                straight(1, 850);
-
-                stop();
-            } else if (position == 3) {
-                straight(0.35, 460);
-                rotate(-0.5, 250);
-                straight(0.35, 400);
-                moveClaw(1, 3000);
-
-                robot.arm.setPower(0.9);
-                sleep(2200);
-                robot.arm.setPower(0);
-
-                outtake(2000);
-                robot.arm.setPower(-0.9);
-                sleep(2000);
-                robot.arm.setPower(0);
-
-                straight(-0.20,1100);
-                rotate(0.5, 625);
-                straight(1, 950);
-
-                stop();
-            }
         }
+
+
+
+        sleep(20);
+
+        if (position == 1) {
+            // low level
+            straight(0.35, 520);
+            rotate(-0.5, 320);
+            straight(0.35, 450);
+            while (robot.clawSensor.getState()) {
+                robot.claw.setPower(1);
+                // moveClaw(1, 2000);
+            }
+            robot.claw.setPower(0);
+
+
+            robot.pivot.setPower(-0.35);
+            sleep(275);
+            robot.pivot.setPower(0);
+            straight(0.20,430);
+
+            outtake(3000);
+            straight(-0.20,1400);
+            rotate(0.5, 750);
+            straight(1, 850);
+
+            stop();
+        } else if (position == 2) {
+            // medium level
+            straight(0.35, 500);
+            rotate(-0.5, 300);
+            straight(0.35, 750);
+            while (robot.clawSensor.getState()) {
+                robot.claw.setPower(1);
+                // moveClaw(1, 2000);
+            }
+            robot.claw.setPower(0);
+
+            outtake(3000);
+            straight(-0.20,1300);
+            rotate(0.5, 750);
+            straight(1, 850);
+
+            stop();
+        } else if (position == 3) {
+            straight(0.35, 575);
+            rotate(-0.5, 300);
+            straight(0.35, 450);
+            while (robot.clawSensor.getState()) {
+                robot.claw.setPower(1);
+                // moveClaw(1, 3000);
+            }
+            robot.claw.setPower(0);
+
+//                robot.arm.setPower(0.9);
+//                sleep(2200);
+//                robot.arm.setPower(0);
+            while (robot.armSensor.getState()) {
+                robot.arm.setPower(0.9);
+            }
+            robot.arm.setPower(0);
+
+            outtake(3000);
+            robot.arm.setPower(-0.9);
+            sleep(1500);
+            robot.arm.setPower(0);
+
+            straight(-0.20,900);
+            rotate(0.5, 750);
+            straight(1, 825);
+
+            stop();
+        }
+
     }
 
     void straight(double power, int milliseconds) {

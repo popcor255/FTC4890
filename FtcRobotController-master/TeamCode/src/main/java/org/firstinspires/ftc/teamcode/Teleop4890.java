@@ -20,8 +20,6 @@ public class Teleop4890 extends LinearOpMode {
 
         robot.init(hardwareMap);
 
-        robot.pivot.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
         waitForStart();
 
         while (opModeIsActive()) {
@@ -73,7 +71,7 @@ public class Teleop4890 extends LinearOpMode {
 
             //counter-clockwise carousel
             if (gamepad1.b) {
-                robot.carousel.setPower(1);
+                robot.carousel.setPower(0.75);
             } else {
                 robot.carousel.setPower(0);
             }
@@ -108,17 +106,26 @@ public class Teleop4890 extends LinearOpMode {
 
             //claw intake
             if (gamepad2.a) {
-                robot.clawGrab.setPower(1);
+                robot.clawGrab.setPower(0.60);
             }
 
             //claw outtake
             if (gamepad2.y) {
-                robot.clawGrab.setPower(-1);
+                robot.clawGrab.setPower(-0.60);
             }
 
             //claw off
             if (gamepad2.b) {
                 robot.clawGrab.setPower(0);
+            }
+
+            // arm stopper
+            if (!robot.armSensor.getState()){
+                robot.arm.setPower(0);
+            }
+
+            if (!robot.clawSensor.getState()){
+                robot.claw.setPower(0);
             }
 
             idle();
