@@ -40,24 +40,27 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.teamcode.util.Motor;
+
 public class Robot {
 
     /* Public OpMode members. */
-    public DcMotor frontRight;
-    public DcMotor backRight;
-    public DcMotor frontLeft;
-    public DcMotor backLeft;
-    public DcMotor arm;
-    public DcMotor pivot;
-    public DcMotor carousel;
-    public CRServo claw;
-    public CRServo clawGrab;
-    public DigitalChannel armSensor;
-    public DigitalChannel clawSensor;
+    public Motor frontRight("frontRight");
+    public Motor backRight("backRight");
+    public Motor frontLeft("frontLeft");
+    public Motor backLeft("backLeft");
+    public Motor arm("arm");
+    public Motor pivot("pivot");
+    public Motor carousel("carousel");
+    public Servo claw("claw");
+    public Servo clawGrab("clawGrab");
+    public DigitalChannel armSensor("armSensor");
+    public DigitalChannel clawSensor("clawSensor");
 
     /* local OpMode members. */
     HardwareMap hwMap = null;
     public ElapsedTime runtime = new ElapsedTime();
+    public Logger logger = CreateLogger();
 
     /* Constructor */
     public Robot() {
@@ -97,12 +100,34 @@ public class Robot {
         clawGrab.setDirection(DcMotorSimple.Direction.FORWARD);
     }
 
+    private static Logger CreateLogger() {
+        Logger logger = Logger.getLogger("MyLogger");
+        // don't forward any logging to this logger to his parent
+        logger.setUseParentHandlers(false);
+        // log messages of all level
+        logger.setLevel(Level.ALL);
+        // define the logfile
+        FileHandler fh = new FileHandler("teleop.log");
+        logger.addHandler(fh);
+        
+        // a Formatter with a custom format
+        CustomFormatter formatter = new CustomFormatter();
+        fh.setFormatter(formatter);
+
+        return logger;
+    }
+
     public void sleep(long milliseconds) {
         try {
             Thread.sleep(milliseconds);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
+    }
+
+    public void SetPower(DcMotor motor, double power) {
+        logger.info(String.format("Motor[%s] || Power[%d]", motor.MotorName, power));
+        motor.SetPower(power);
     }
 }
 

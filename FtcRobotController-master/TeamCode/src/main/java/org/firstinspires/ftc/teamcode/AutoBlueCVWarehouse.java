@@ -237,14 +237,14 @@ public class AutoBlueCVWarehouse extends LinearOpMode {
     }
 
     void moveClaw(double power, int milliseconds) {
-        robot.claw.setPower(power);
+        robot.setPower(claw, power);
         sleep(milliseconds);
-        robot.claw.setPower(0);
+        robot.setPower(claw, 0);
     }
 
     void outtake(int milliseconds) {
-        robot.clawGrab.setPower(-1);
+        robot.setPower(clawGrab, -1);
         sleep((milliseconds));
-        robot.clawGrab.setPower(0);
+        robot.setPower(clawGrab, 0);
     }
 }

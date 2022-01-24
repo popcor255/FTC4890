@@ -99,24 +99,24 @@ public class Teleop4890 extends LinearOpMode {
 
             //Claw mover
             if (gamepad2.right_stick_y != 0) {
-                robot.claw.setPower(-gamepad2.right_stick_y);
+                robot.setPower(claw, -gamepad2.right_stick_y);
             } else {
-                robot.claw.setPower(0);
+                robot.setPower(claw, 0);
             }
 
             //claw intake
             if (gamepad2.a) {
-                robot.clawGrab.setPower(0.60);
+                robot.setPower(clawGrab, 0.60);
             }
 
             //claw outtake
             if (gamepad2.y) {
-                robot.clawGrab.setPower(-0.60);
+                robot.setPower(clawGrab, -0.60);
             }
 
             //claw off
             if (gamepad2.b) {
-                robot.clawGrab.setPower(0);
+                robot.setPower(clawGrab, 0);
             }
 
             // arm stopper
@@ -125,7 +125,7 @@ public class Teleop4890 extends LinearOpMode {
             }
 
             if (!robot.clawSensor.getState()){
-                robot.claw.setPower(0);
+                robot.setPower(claw, 0);
             }
 
             idle();

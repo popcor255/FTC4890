@@ -99,7 +99,7 @@ public class PushbotTeleopTank_Iterative extends OpMode{
         right = -gamepad1.right_stick_y;
 
         robot.leftDrive.setPower(left);
-        robot.rightDrive.setPower(right);
+        robot.SetPower(rightDrive, right);
 
         // Use gamepad left & right Bumpers to open and close the claw
         if (gamepad1.right_bumper)

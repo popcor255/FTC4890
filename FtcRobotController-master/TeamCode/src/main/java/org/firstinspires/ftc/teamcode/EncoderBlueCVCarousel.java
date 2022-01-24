@@ -141,10 +141,10 @@ public class EncoderBlueCVCarousel extends LinearOpMode {
             rotate(0.5, 320);
             straight(0.35, 450);
             while (robot.clawSensor.getState()) {
-                robot.claw.setPower(1);
+                robot.setPower(claw, 1);
                 // moveClaw(1, 2000);
             }
-            robot.claw.setPower(0);
+            robot.setPower(claw, 0);
 
 
             robot.pivot.setPower(-0.35);
@@ -169,10 +169,10 @@ public class EncoderBlueCVCarousel extends LinearOpMode {
             rotate(0.5, 300);
             straight(0.35, 700);
             while (robot.clawSensor.getState()) {
-                robot.claw.setPower(1);
+                robot.setPower(claw, 1);
                 // moveClaw(1, 2000);
             }
-            robot.claw.setPower(0);
+            robot.setPower(claw, 0);
 
             outtake(3000);
             straight(-0.35,300);
@@ -190,10 +190,10 @@ public class EncoderBlueCVCarousel extends LinearOpMode {
             rotate(0.5, 300);
             straight(0.35, 450);
             while (robot.clawSensor.getState()) {
-                robot.claw.setPower(1);
+                robot.setPower(claw, 1);
                 // moveClaw(1, 3000);
             }
-            robot.claw.setPower(0);
+            robot.setPower(claw, 0);
 
 //                robot.arm.setPower(0.9);
 //                sleep(2200);
@@ -269,15 +269,15 @@ public class EncoderBlueCVCarousel extends LinearOpMode {
     }
 
     void moveClaw(double power, int milliseconds) {
-        robot.claw.setPower(power);
+        robot.setPower(claw, power);
         sleep(milliseconds);
-        robot.claw.setPower(0);
+        robot.setPower(claw, 0);
     }
 
     void outtake(int milliseconds) {
-        robot.clawGrab.setPower(-1);
+        robot.setPower(clawGrab, -1);
         sleep((milliseconds));
-        robot.clawGrab.setPower(0);
+        robot.setPower(clawGrab, 0);
     }
 
     void carouselClock(int milliseconds) {
